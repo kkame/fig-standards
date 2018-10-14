@@ -5,62 +5,50 @@ order: 2
 ---
 
 
-# Coding Style Guide
+# 코딩 스타일 가이드
 
-This guide extends and expands on [PSR-1], the basic coding standard.
+이 가이드는 기본 코딩 표준인 [PSR-1]을 확장입니다.
 
-The intent of this guide is to reduce cognitive friction when scanning code
-from different authors. It does so by enumerating a shared set of rules and
-expectations about how to format PHP code.
+이 가이드의 의도는 다른 저자의 코드를 볼 때 가독성을 해치는 것을 줄이는 것입니다. 
+PHP 코드의 형식을 지정하는 방법에 대한 여러가지 규칙과 기대 사항을 나열함으로써 이를 달성합니다.
 
-The style rules herein are derived from commonalities among the various member
-projects. When various authors collaborate across multiple projects, it helps
-to have one set of guidelines to be used among all those projects. Thus, the
-benefit of this guide is not in the rules themselves, but in the sharing of
-those rules.
+이 스타일 규칙은 다양한 회원 프로젝트 간의 공통점에서 파생되었습니다.
+다양한 저자가 여러 프로젝트에서 공동 작업을 수행 할 때 모든 프로젝트 중에서 한 가지의 가이드을 사용하는 것이 도움이 됩니다.
+따라서 이 가이드의 이점은 규칙 자체가 아니라 이러한 규칙을 공유하는 것입니다.
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
-interpreted as described in [RFC 2119].
+이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
+이것은 [RFC 2119]에 설명 된대로 해석해야 합니다.
+`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
 
 [RFC 2119]: http://www.ietf.org/rfc/rfc2119.txt
 [PSR-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
 [PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
 
-## 1. Overview
+## 1. 개요
 
-- Code MUST follow a "coding style guide" PSR [[PSR-1]].
+- 코드는 반드시(MUST) "코딩 스타일 가이드" PSR [[PSR-1]]을 따라야합니다.
 
-- Code MUST use 4 spaces for indenting, not tabs.
+- 코드는 들여쓰기에 반드시(MUST) 탭이 아니라 스페이스 4칸을 사용해야합니다.
 
-- There MUST NOT be a hard limit on line length; the soft limit MUST be 120
-  characters; lines SHOULD be 80 characters or less.
+- 한줄에 들어가는 문자열의 길이에 엄격한 제한이 있으면 안됩니다. 가벼운 제한은 한줄에 120자입니다 (MUST). 가능하다면 한줄은 80자 이하 여야합니다 (SHOULD).
 
-- There MUST be one blank line after the `namespace` declaration, and there
-  MUST be one blank line after the block of `use` declarations.
+- `namespace` 선언 다음에 빈 줄이 하나 있어야만 하며(MUST) 그리고 `use` 선언 블록 뒤에 빈 줄이 하나 있어야만 합니다 (MUST).
 
-- Opening braces for classes MUST go on the next line, and closing braces MUST
-  go on the next line after the body.
+- 클래스의 여는 중괄호는 다음 줄로 가야만 하며(MUST), 닫는 중괄호는 본문 뒤의 다음 줄로 가야만 합니다(MUST).
 
-- Opening braces for methods MUST go on the next line, and closing braces MUST
-  go on the next line after the body.
+- 메소드의 여는 중괄호는 다음 줄로 가야만 하며(MUST), 닫는 중괄호는 본문 뒤의 다음 줄로 가야만 합니다(MUST).
 
-- Visibility MUST be declared on all properties and methods; `abstract` and
-  `final` MUST be declared before the visibility; `static` MUST be declared
-  after the visibility.
+- 모든 속성 및 메서드에서 가시성을 선언해야만 합니다 (MUST). `abstract`와`final`은 가시성 (visibility) 전에 선언되어야만 합니다(MUST). `static`은 가시성 뒤에 선언되어야만 합니다 (MUST).
 
-- Control structure keywords MUST have one space after them; method and
-  function calls MUST NOT.
+- 제어 구조 키워드는 그 뒤에 하나의 공백을 가져야만 합니다 (MUST). 메서드와 함수에서 해서는 안됩니다(MUST NOT). `역자주: if, switch, try, catch, foreach 등`
 
-- Opening braces for control structures MUST go on the same line, and closing
-  braces MUST go on the next line after the body.
+- 제어 구조를 여는 중괄호는 같은 줄에 있어야만 하며(MUST), 닫는 중괄호는 반드시 본문 뒤의 다음 줄로 가야만 합니다(MUST).
 
-- Opening parentheses for control structures MUST NOT have a space after them,
-  and closing parentheses for control structures MUST NOT have a space before.
+- 제어 구조를 여는 괄호는 그 뒤에 공백이 없어야만 하며(MUST NOT), 제어 구조에 대한 닫는 괄호는 전에는 공백이 없어야만 합니다(MUST NOT).
 
-### 1.1. Example
+### 1.1. 예제
 
-This example encompasses some of the rules below as a quick overview:
+이 예는 아래의 규칙 중 일부를 간략하게 설명합니다.
 
 ~~~php
 <?php
