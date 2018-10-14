@@ -35,7 +35,7 @@ order: 0
 * `\Zend\Acl` => `/path/to/project/lib/vendor/Zend/Acl.php`
 * `\Zend\Mail\Message` => `/path/to/project/lib/vendor/Zend/Mail/Message.php`
 
-밑줄이 있는 네임스페이와 클래스의 예제
+밑줄이 있는 네임스페이스와 클래스의 예제
 -----------------------------------------
 
 * `\namespace\package\Class_Name` => `/path/to/project/lib/vendor/namespace/package/Class/Name.php`
