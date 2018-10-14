@@ -31,7 +31,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: PHP Standards Recommendations
-subtitle: PHP Standards Recommendations (PSR 한글 번역본)
+subtitle: PSR 한글 번역본
 description: >- # this means to ignore newlines until "baseurl:"
   이 사이트는 개인의 학습을 목적으로 번역되었습니다. 일부 오역이 있을 수 있습니다.
 author: kkame
