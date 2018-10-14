@@ -4,12 +4,12 @@ layout: "page"
 order: 4
 ---
 
-Example Implementations of PSR-4
+PSR-4의 구현 예
 ================================
 
-The following examples illustrate PSR-4 compliant code:
+다음 예는 PSR-4에 호환하는 코드입니다.
 
-Closure Example
+Closure 예제
 ---------------
 
 ~~~php
@@ -56,11 +56,10 @@ spl_autoload_register(function ($class) {
 });
 ~~~
 
-Class Example
+Class 예제
 -------------
 
-The following is an example class implementation to handle multiple
-namespaces:
+다음은 네임스페이스를 활용하여 여러 클래스를 처리하기위한 클래스 구현의 예제입니다.
 
 ~~~php
 <?php
@@ -254,7 +253,7 @@ class Psr4AutoloaderClass
 
 ### Unit Tests
 
-The following example is one way of unit testing the above class loader:
+다음 예제는 위의 클래스 로더를 단위 테스트하는 방법의 한 가지입니다.
 
 ~~~php
 <?php
