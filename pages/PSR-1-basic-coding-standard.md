@@ -4,66 +4,61 @@ layout: "page"
 order: 1
 ---
 
-# Basic Coding Standard
+# 기본 코딩 표준
 
-This section of the standard comprises what should be considered the standard
-coding elements that are required to ensure a high level of technical
-interoperability between shared PHP code.
+이 섹션은 공유되는 PHP 코드 간의 높은 수준의 기술적 상호 호환성을 보장하는 데 필요한 표준 코딩 사항으로 간주되어야 하는 것을 포함합니다.
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
-interpreted as described in [RFC 2119].
+
+
+이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
+이것은 [RFC 2119]에 설명 된대로 해석해야 합니다.
+`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
+
+
 
 [RFC 2119]: http://www.ietf.org/rfc/rfc2119.txt
 [PSR-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
 [PSR-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 
-## 1. Overview
+## 1. 개요
 
-- Files MUST use only `<?php` and `<?=` tags.
+- 반드시(MUST) `<?php` 와 `<?=` 태그만을 사용해야 합니다.
 
-- Files MUST use only UTF-8 without BOM for PHP code.
+- 반드시(MUST) BOM이 없는 UTF-8로만 PHP코드를 작성해야 합니다.
 
-- Files SHOULD *either* declare symbols (classes, functions, constants, etc.)
-  *or* cause side-effects (e.g. generate output, change .ini settings, etc.)
-  but SHOULD NOT do both.
+- 각 파일은 무언가를 선언하거나 (클래스, 함수, 상수 등) *또는* 사이드이펙트의 원인이 되는(예 : 출력 생성, .ini 설정 변경 등) 형태로 작성해야하지만(SHOULD) 둘 모두를 수행하면 안됩니다(SHOULD NOT).
 
-- Namespaces and classes MUST follow an "autoloading" PSR: [[PSR-0], [PSR-4]].
+- 네임스페이스와 클래스는 반드시(MUST) "autoloading"에 관한 PSR: [[PSR-0], [PSR-4]]을 따라 작성해야 합니다.
 
-- Class names MUST be declared in `StudlyCaps`.
+- Class 는 반드시(MUST) `StudlyCaps`에 따라 작성해야합니다. `역자주: StudlyCaps 라는것은 단어의 첫글자가 대문자인 규칙을 말합니다. ex: DefaultClass`
 
-- Class constants MUST be declared in all upper case with underscore separators.
+- Class의 상수(constants)는 반드시(MUST) 전부 대문자와 밑줄`_`만으로 작성해야합니다.
 
-- Method names MUST be declared in `camelCase`.
+- Method는 반드시(MUST) `camelCase`로 작성해야합니다.
 
-## 2. Files
+## 2. 파일
 
 ### 2.1. PHP Tags
 
-PHP code MUST use the long `<?php ?>` tags or the short-echo `<?= ?>` tags; it
-MUST NOT use the other tag variations.
+PHP 코드는 반드시(MUST)  긴 `<?php ?>` 태그나  짧은 `<?= ?>` 태그를 사용해야합니다
+그외의 태그를 사용해서는 안됩니다 (MUST NOT).
 
 ### 2.2. Character Encoding
+PHP 코드는 반드시(MUST) BOM이 없는 UTF-8 문자열만 사용해야합니다
 
-PHP code MUST use only UTF-8 without BOM.
+### 2.3. 사이드이펙트
 
-### 2.3. Side Effects
+각 파일은 새로운 무언가 (클래스, 함수, 상수 등)를 선언하고 다른 사이드이펙트를 일으키지 않거나,
+사이드이펙트가 있는 로직를 실행하지만(SHOULD) 둘 다 수행하면 안됩니다(SHOULD NOT).
 
-A file SHOULD declare new symbols (classes, functions, constants,
-etc.) and cause no other side effects, or it SHOULD execute logic with side
-effects, but SHOULD NOT do both.
+"사이드이펙트"는 클래스, 함수, 상수 등을 선언하는 것과 직접적으로 관련이없는 논리를 파일에 단순히 포함하는 것부터 실행하는 것 전부를 의미합니다.
+`역자주: 일반적으로 프로그래밍에서 사용되는 사이드이펙트의 의미와 이 문장에서 사용되는 사이드이펙트의 의미는 약간의 차이가 있습니다`
 
-The phrase "side effects" means execution of logic not directly related to
-declaring classes, functions, constants, etc., *merely from including the
-file*.
+"사이드이펙트"에는 Output 생성, 명시적인 "require"또는 "include"의 사용, 외부 서비스 연결, ini 설정 변경, 오류 또는 예외 발생, 전역 변수 또는 정적 변수 변경, 파일의 읽기 또는 쓰기 등이 있습니다.
 
-"Side effects" include but are not limited to: generating output, explicit
-use of `require` or `include`, connecting to external services, modifying ini
-settings, emitting errors or exceptions, modifying global or static variables,
-reading from or writing to a file, and so on.
+다음은 선언과 사이드이펙트가 모두 포함 된 파일의 예입니다.
 
-The following is an example of a file with both declarations and side effects;
-i.e, an example of what to avoid:
+예제:
 
 ~~~php
 <?php
@@ -83,8 +78,9 @@ function foo()
 }
 ~~~
 
-The following example is of a file that contains declarations without side
-effects; i.e., an example of what to emulate:
+다음 예제는 사이드이펙트가 없이 작성된 파일입니다.
+
+예제:
 
 ~~~php
 <?php
@@ -103,18 +99,17 @@ if (! function_exists('bar')) {
 }
 ~~~
 
-## 3. Namespace and Class Names
+## 3. Namespace 와 Class 
 
-Namespaces and classes MUST follow an "autoloading" PSR: [[PSR-0], [PSR-4]].
+네임 스페이스와 Class는 반드시(MUST) [자동 로딩 (autoloading)] PSR [[PSR-0], [PSR-4]]을 따라야합니다.
 
-This means each class is in a file by itself, and is in a namespace of at
-least one level: a top-level vendor name.
+이것은 클래스가 각각의 개별 파일에 작성되어있으며, 공급자(vendor)의 이름으로 시작하는 네임스페이스를 사용했다는 것을 의미합니다. 
 
-Class names MUST be declared in `StudlyCaps`.
+클래스 이름은 반드시(MUST) `StudlyCaps` 규칙으로 작성되어야 합니다.
 
-Code written for PHP 5.3 and after MUST use formal namespaces.
+PHP 5.3 및 이후 버전 용으로 작성된 코드는 정식 네임 스페이스를 사용해야합니다.
 
-For example:
+예제:
 
 ~~~php
 <?php
@@ -126,8 +121,11 @@ class Foo
 }
 ~~~
 
-Code written for 5.2.x and before SHOULD use the pseudo-namespacing convention
-of `Vendor_` prefixes on class names.
+
+5.2.x 용으로 작성된 코드에서 네임 스페이스와 유사한 규칙을 사용하기 위해
+클래스 이름에 `Vendor_` 접두어를 붙입니다(SHOULD).
+
+
 
 ~~~php
 <?php
@@ -137,14 +135,16 @@ class Vendor_Model_Foo
 }
 ~~~
 
-## 4. Class Constants, Properties, and Methods
+## 4. Class의 상수(Constants), Properties, Methods
 
-The term "class" refers to all classes, interfaces, and traits.
+"Class"라는 용어는 모든 Class, Interface 및 Trait을 의미합니다.
 
-### 4.1. Constants
 
-Class constants MUST be declared in all upper case with underscore separators.
-For example:
+### 4.1. 상수(Constants)
+
+클래스 상수는 모두 대문자 또는 밑줄`_`로 선언해야합니다 (MUST).
+
+예제:
 
 ~~~php
 <?php
@@ -159,13 +159,11 @@ class Foo
 
 ### 4.2. Properties
 
-This guide intentionally avoids any recommendation regarding the use of
-`$StudlyCaps`, `$camelCase`, or `$under_score` property names.
+이 가이드는 의도적으로 `$StudlyCaps` , `$camelCase` 또는 `$under_score` 같은 형태로 property 이름을 권장하는 것을 피하고 있습니다.
 
-Whatever naming convention is used SHOULD be applied consistently within a
-reasonable scope. That scope may be vendor-level, package-level, class-level,
-or method-level.
+Properties는 어떤 규칙이 사용 되든 상관없지만 합리적인 범위 내에서 일관되게 적용되어야 합니다(SHOULD).
+이 범위는 공급자 수준(vendor-level), 패키지 수준(package-level), Class 수준(class-level) 또는 Method(method-level) 수준 일 수 있습니다.
 
 ### 4.3. Methods
 
-Method names MUST be declared in `camelCase()`.
+Method의 이름은 반드시(MUST) `camelCase`로 작성해야 합니다.
