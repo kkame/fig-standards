@@ -4,70 +4,55 @@ layout: "page"
 order: 3
 ---
 
-Logger Interface
+로거 인터페이스
 ================
 
-This document describes a common interface for logging libraries.
+이 문서는 로깅 라이브러리에 대한 공통 인터페이스를 설명합니다.
 
-The main goal is to allow libraries to receive a `Psr\Log\LoggerInterface`
-object and write logs to it in a simple and universal way. Frameworks
-and CMSs that have custom needs MAY extend the interface for their own
-purpose, but SHOULD remain compatible with this document. This ensures
-that the third-party libraries an application uses can write to the
-centralized application logs.
+가장 중요한 목표는 라이브러리가 `Psr\Log\LoggerInterface` 객체를 받아서 간단하고 보편적인 방법으로 로그를 쓸 수있게하는 것입니다.
+커스텀 할 필요가 있는 프레임워크와 CMS는 자체적인 목적을 위해 인터페이스를 확장 할 수 있지만 이 문서와 호환 가능해야합니다 (SHOULD).
+이렇게하면 프로그램에서 사용하는 타사 라이브러리가 프로그램의 중앙 집중식 로그에 쓸 수 있습니다. `역자주: 타 벤더의 로그를 중앙집중형으로 모아서 남길 수 있다는 의미`
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
-interpreted as described in [RFC 2119][].
+이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
+이것은 [RFC 2119]에 설명 된대로 해석해야 합니다.
+`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
 
-The word `implementor` in this document is to be interpreted as someone
-implementing the `LoggerInterface` in a log-related library or framework.
-Users of loggers are referred to as `user`.
+이 문서에서 `구현자(implementor)` 라는 단어는 로그 관련 라이브러리 또는 프레임워크에서 `LoggerInterface` 를 구현하는 누군가로 해석되어야합니다.
+로거 사용자는 `사용자(user)`라고합니다.
 
 [RFC 2119]: http://tools.ietf.org/html/rfc2119
 
-## 1. Specification
+## 1. 명세서
 
-### 1.1 Basics
+### 1.1 기본
 
-- The `LoggerInterface` exposes eight methods to write logs to the eight
-  [RFC 5424][] levels (debug, info, notice, warning, error, critical, alert,
-  emergency).
+- `LoggerInterface`는 로그를 8 개의 [RFC 5424] 레벨 (debug, info, notice, warning, error, critical, alert, emergency)에 맞게 쓸 수 있는 8 가지 method를 제공해야 합니다.
+ 
+- 9 번째 method 인`log`는 첫 번째 인자로 로그 수준(level)을 입력받습니다.
+  로그 수준 상수 중 하나를 사용하여 이 메서드를 호출하면 수준별 메서드를 호출 할 때와 동일한 결과를 가져야합니다.
+  알지 못하는 수준(level)이거나 이 스펙에 정의되지 않은 수준(level)로 이 메소드를 호출하면 반드시 `Psr\Log\InvalidArgumentException` 을 던져야합니다 (MUST).
+  사용자는 현재 구현이 이를 지원하는지 모른 채 사용자 지정 수준(level)을 사용해서는 안됩니다(SHOULD NOT).
 
-- A ninth method, `log`, accepts a log level as the first argument. Calling this
-  method with one of the log level constants MUST have the same result as
-  calling the level-specific method. Calling this method with a level not
-  defined by this specification MUST throw a `Psr\Log\InvalidArgumentException`
-  if the implementation does not know about the level. Users SHOULD NOT use a
-  custom level without knowing for sure the current implementation supports it.
 
 [RFC 5424]: http://tools.ietf.org/html/rfc5424
 
-### 1.2 Message
+### 1.2 메세지
 
-- Every method accepts a string as the message, or an object with a
-  `__toString()` method. Implementors MAY have special handling for the passed
-  objects. If that is not the case, implementors MUST cast it to a string.
+- 모든 method는 문자열을 메시지로 받거나 `__toString ()` method를 가진 객체를 받아들입니다.
+   구현자는 전달 된 객체를 특별한 형태로 처리 할 수도있다 (MAY).
+   그렇지 않은 경우, 구현자는 그것을 문자열로 변환해야한다 (MUST).
+   
 
-- The message MAY contain placeholders which implementors MAY replace with
-  values from the context array.
-
-  Placeholder names MUST correspond to keys in the context array.
-
-  Placeholder names MUST be delimited with a single opening brace `{` and
-  a single closing brace `}`. There MUST NOT be any whitespace between the
-  delimiters and the placeholder name.
-
-  Placeholder names SHOULD be composed only of the characters `A-Z`, `a-z`,
-  `0-9`, underscore `_`, and period `.`. The use of other characters is
-  reserved for future modifications of the placeholders specification.
-
-  Implementors MAY use placeholders to implement various escaping strategies
-  and translate logs for display. Users SHOULD NOT pre-escape placeholder
-  values since they can not know in which context the data will be displayed.
-
-  The following is an example implementation of placeholder interpolation
-  provided for reference purposes only:
+- 메시지는 구현자가 문맥 배열의 값으로 대체 할 수있는(MAY) Placeholder를 포함 할 수있습니다(MAY).
+  Placeholder 이름은 컨텍스트 배열의 키와 일치해야합니다.
+  Placeholder 이름은 하나의 여는 중괄호 `{` 와 하나의 닫는 중괄호 `}`로 구분해야합니다.
+  구분 기호와 Placeholder 이름 사이에 공백이 없어야합니다 (MUST NOT).
+  Placeholder 이름은 `A-Z`, `a-z`, `0-9`, 밑줄 `_` 및 마침표 `.` 만으로 구성되어야합니다 (SHOULD).
+  다른 문자의 사용은 Placeholder 사양(specification)의 향후 수정을 위해 예약됩니다.
+  구현자는 Placeholder를 사용하여 다양한 이스케이프 전략을 구현하고 표시를 위해 로그를 변환 할 수 있습니다 (MAY).
+  사용자는 데이터가 표시 될 컨텍스트를 알 수 없으므로 Placeholder 값을 미리 이스케이프해서는 안됩니다.
+ 
+  다음은 참조용으로만 제공되는 Placeholder 보간법의 구현 예입니다.
 
   ~~~php
   <?php
@@ -100,50 +85,42 @@ Users of loggers are referred to as `user`.
   echo interpolate($message, $context);
   ~~~
 
-### 1.3 Context
+### 1.3 문맥(Context)
 
-- Every method accepts an array as context data. This is meant to hold any
-  extraneous information that does not fit well in a string. The array can
-  contain anything. Implementors MUST ensure they treat context data with
-  as much lenience as possible. A given value in the context MUST NOT throw
-  an exception nor raise any php error, warning or notice.
+- 모든 메소드는 배열을 컨텍스트 데이터로 허용합니다.
+  이것은 문자열에 잘 맞지 않는 불필요한 정보를 보유하기위한 것입니다.
+  배열은 무엇이든 포함 할 수 있습니다.
+  구현자는 가능한 한 많은 관용으로 컨텍스트 데이터를 처리해야합니다 (MUST).
+  문맥에서 주어진 값은 예외를 던지거나 PHP error, warning 또는 notice를 발생시켜서는 안됩니다(MUST NOT).
 
-- If an `Exception` object is passed in the context data, it MUST be in the
-  `'exception'` key. Logging exceptions is a common pattern and this allows
-  implementors to extract a stack trace from the exception when the log
-  backend supports it. Implementors MUST still verify that the `'exception'`
-  key is actually an `Exception` before using it as such, as it MAY contain
-  anything.
+- `Exception` 객체가 컨텍스트 데이터에 전달되면, 그것은 `'exception'` 키에 있어야합니다 (MUST).
+   로깅 예외(exceptios)는 일반적인 패턴이며, 이로 인해 구현자가 로그 백엔드가 지원할 때 예외에서 스택 추적을 추출 할 수 있습니다.
+   구현자들은 무엇이든 포함 할 수 있기 때문에`'exception'` 키가 실제로 그것을 사용하기 전에 실제로 `Exception` 인지를 반드시 확인해야합니다 (MUST).
 
-### 1.4 Helper classes and interfaces
 
-- The `Psr\Log\AbstractLogger` class lets you implement the `LoggerInterface`
-  very easily by extending it and implementing the generic `log` method.
-  The other eight methods are forwarding the message and context to it.
+### 1.4 헬퍼 클래스와 인터페이스
 
-- Similarly, using the `Psr\Log\LoggerTrait` only requires you to
-  implement the generic `log` method. Note that since traits can not implement
-  interfaces, in this case you still have to implement `LoggerInterface`.
+- `Psr\Log\AbstractLogger` Class를 확장하고 일반적인 `log` 메소드를 구현함으로써 `LoggerInterface`를 매우 쉽게 구현할 수있게합니다.
+   다른 8 가지 method는 메시지와 컨텍스트를 전달하는 것입니다.
 
-- The `Psr\Log\NullLogger` is provided together with the interface. It MAY be
-  used by users of the interface to provide a fall-back "black hole"
-  implementation if no logger is given to them. However, conditional logging
-  may be a better approach if context data creation is expensive.
+- 마찬가지로 `Psr\Log\LoggerTrait` 만 사용하면 일반적으로 `log` 메소드를 구현해야합니다.
+  이 trait은 인터페이스를 구현하지 않으므로 이 경우에는 여전히 `LoggerInterface`를 구현해야합니다.
 
-- The `Psr\Log\LoggerAwareInterface` only contains a
-  `setLogger(LoggerInterface $logger)` method and can be used by frameworks to
-  auto-wire arbitrary instances with a logger.
+- `Psr\Log\NullLogger`는 인터페이스와 함께 제공됩니다.
+  로거가 제공되지 않으면 폴백 (back-back) "블랙홀"구현을 제공하기 위해 인터페이스 사용자가 이를 사용할 수 있습니다 (MAY).
+  그러나 컨텍스트 데이터 작성 비용면에서 조건부 로깅이 더 나은 접근 방법 일 수 있습니다. `역자주: 아무것도 저장하지 않는 로거를 사용하는 것 보다 경우에 따라 로거를 호출 하도록 하는 편이 더 효율적`
 
-- The `Psr\Log\LoggerAwareTrait` trait can be used to implement the equivalent
-  interface easily in any class. It gives you access to `$this->logger`.
 
-- The `Psr\Log\LogLevel` class holds constants for the eight log levels.
+- `Psr\Log\LoggerAwareInterface` 는 `setLogger(LoggerInterface $logger)` method만을 포함하고 있으며, 임의의 인스턴스를 로거로 자동으로 연결하기 위해 프레임워크에서 사용할 수 있습니다.
+
+- `Psr\Log\LoggerAwareTrait` trait은 모든 클래스에서 쉽게 동일한 인터페이스를 구현하는 데 사용할 수 있습니다.
+  `$this->logger`에 접근 할 수 있습니다.
+
+- `Psr\Log\LogLevel` 클래스는 8 개의 로그 레벨에 대한 상수를 가지고 있습니다.
 
 ## 2. Package
 
-The interfaces and classes described as well as relevant exception classes
-and a test suite to verify your implementation are provided as part of the
-[psr/log](https://packagist.org/packages/psr/log) package.
+설명한 인터페이스와 클래스는 물론 관련 예외 클래스 및 구현을 확인하는 테스트가 [psr/log](https://packagist.org/packages/psr/log) 패키지의 일부로 제공됩니다.
 
 ## 3. `Psr\Log\LoggerInterface`
 
