@@ -7,25 +7,20 @@ order: 15
 HTTP Server Request Handlers
 ============================
 
-This document describes common interfaces for HTTP server request handlers
-("request handlers") and HTTP server middleware components ("middleware")
-that use HTTP messages as described by [PSR-7][psr7] or subsequent
-replacement PSRs.
+이 문서에서는 [PSR-7][psr7] 또는 후속 PSR로 설명 된 HTTP 메시지를 사용하는 HTTP 서버 요청 처리기 ("요청 처리기") 및 HTTP 서버 미들웨어 구성 요소 ("미들웨어")에 대한 일반적인 인터페이스에 대해 설명합니다.
 
-HTTP request handlers are a fundamental part of any web application. Server side
-code receives a request message, processes it, and produces a response message.
-HTTP middleware is a way to move common request and response processing away from
-the application layer.
+HTTP 요청 처리기는 모든 웹 응용 프로그램의 기본 요소입니다.
+서버 측 코드는 요청 메시지를 수신하여 처리하고 응답 메시지를 생성합니다.
+HTTP 미들웨어는 공통 요청 및 응답 처리를 응용 프로그램 계층에서 분리하는 한 방법입니다.
 
-The interfaces described in this document are abstractions for request handlers
-and middleware.
+이 문서에서 설명하는 인터페이스는 요청 처리기 및 미들웨어에 대한 추상화입니다.
 
-_Note: All references to "request handlers" and "middleware" are specific to
-**server request** processing._
+_참고 : "요청 처리기"와 "미들웨어"에 대한 모든 참조는 **서버 요청** 처리에만 해당됩니다 ._
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
-interpreted as described in [RFC 2119][rfc2119].
+
+이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
+이것은 [rfc2119]에 설명 된대로 해석해야 합니다.
+`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
 
 [psr7]: http://www.php-fig.org/psr/psr-7/
 [rfc2119]: http://tools.ietf.org/html/rfc2119
@@ -35,52 +30,45 @@ interpreted as described in [RFC 2119][rfc2119].
 - [PSR-7][psr7]
 - [RFC 2119][rfc2119]
 
-## 1. Specification
+## 1. 명세서
 
 ### 1.1 Request Handlers
 
-A request handler is an individual component that processes a request and
-produces a response, as defined by PSR-7.
+요청 처리기는 PSR-7에 정의 된대로 요청을 처리하고 응답을 생성하는 개별 구성 요소입니다.
 
-A request handler MAY throw an exception if request conditions prevent it from
-producing a response. The type of exception is not defined.
+요청 처리자가 응답을 생성하지 못하는 경우 요청 처리기가 예외를 던질 수 있습니다 (MAY).
+예외 유형이 정의되지 않았습니다.
 
-Request handlers using this standard MUST implement the following interface:
+이 표준을 사용하는 요청 처리기는 다음 인터페이스를 구현해야합니다 (MUST).
 
 - `Psr\Http\Server\RequestHandlerInterface`
 
 ### 1.2 Middleware
 
-A middleware component is an individual component participating, often together
-with other middleware components, in the processing of an incoming request and
-the creation of a resulting response, as defined by PSR-7.
+A middleware component is an individual component participating, often together with other middleware components, in the processing of an incoming request and the creation of a resulting response, as defined by PSR-7.
+미들웨어 구성 요소는 들어오는 요청을 처리하고 PSR-7에 정의 된 결과 응답을 생성 할 때 다른 미들웨어 구성 요소와 함께 참여하는 개별 구성 요소입니다.
 
-A middleware component MAY create and return a response without delegating to
-a request handler, if sufficient conditions are met.
+A middleware component MAY create and return a response without delegating to a request handler, if sufficient conditions are met.
+미들웨어 컴포넌트는 충분한 조건이 만족된다면 요청 처리자에게 위임하지 않고 응답을 생성하고 리턴 할 수 있습니다 (MAY).
 
-Middleware using this standard MUST implement the following interface:
+이 표준을 사용하는 미들웨어는 다음 인터페이스를 구현해야합니다(MUST).
 
 - `Psr\Http\Server\MiddlewareInterface`
 
 ### 1.3 Generating Responses
 
-It is RECOMMENDED that any middleware or request handler that generates a response
-will either compose a prototype of a PSR-7 `ResponseInterface` or a factory capable
-of generating a `ResponseInterface` instance in order to prevent dependence on a
-specific HTTP message implementation.
+응답을 생성하는 미들웨어 또는 요청 처리기는 특정 HTTP 메시지 구현에 대한 의존을 방지하기 위해 PSR-7 `ResponseInterface` 의 프로토타입 또는 `ResponseInterface` 인스턴스를 생성 할 수있는 팩토리를 작성하는 것이 좋습니다(RECOMMENDED).
 
 ### 1.4 Handling Exceptions
 
-It is RECOMMENDED that any application using middleware include a component
-that catches exceptions and converts them into responses. This middleware SHOULD
-be the first component executed and wrap all further processing to ensure that
-a response is always generated.
+미들웨어를 사용하는 모든 응용 프로그램에는 예외를 잡아서 응답으로 변환하는 구성 요소가 포함되는 것이 좋습니다(RECOMMENDED).
+이 미들웨어는 실행 된 첫 번째 구성 요소 여야하며(SHOULD) 응답이 항상 생성되도록하기 위해 모든 추가 처리를 래핑해야합니다.
 
 ## 2. Interfaces
 
 ### 2.1 Psr\Http\Server\RequestHandlerInterface
 
-The following interface MUST be implemented by request handlers.
+요청 처리기는 다음의 인터페이스를 구현되어야합니다(MUST).
 
 ```php
 namespace Psr\Http\Server;
@@ -107,7 +95,7 @@ interface RequestHandlerInterface
 
 ### 2.2 Psr\Http\Server\MiddlewareInterface
 
-The following interface MUST be implemented by compatible middleware components.
+미들웨어 구성 요소는 다음 인터페이스에 호환 가능하게 구현해야합니다(MUST).
 
 ```php
 namespace Psr\Http\Server;
