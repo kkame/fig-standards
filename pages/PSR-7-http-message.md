@@ -1,27 +1,21 @@
 ---
 title: PSR-7 HTTP message interfaces
 layout: "page"
-order: 17
+order: 7
 ---
 
 # HTTP message interfaces
 
-This document describes common interfaces for representing HTTP messages as
-described in [RFC 7230](http://tools.ietf.org/html/rfc7230) and
-[RFC 7231](http://tools.ietf.org/html/rfc7231), and URIs for use with HTTP
-messages as described in [RFC 3986](http://tools.ietf.org/html/rfc3986).
+이 문서는 [RFC 7230](http://tools.ietf.org/html/rfc7230) 및 [RFC 7231](http://tools.ietf.org/html/rfc7231)에 설명한 대로 
+HTTP 메시지를 처리하는 일반적인 인터페이스 및 [RFC 3986](http://tools.ietf.org/html/rfc3986)에 설명한 대로 HTTP 메시지와 함께 사용할 URI에 관한 내용을 설명합니다
 
-HTTP messages are the foundation of web development. Web browsers and HTTP
-clients such as cURL create HTTP request messages that are sent to a web server,
-which provides an HTTP response message. Server-side code receives an HTTP
-request message, and returns an HTTP response message.
+HTTP 메시지는 웹 개발의 기반(foundation)입니다.
+웹 브라우저와 cURL과 같은 HTTP 클라이언트는 HTTP 요청 메시지를 작성하여 HTTP 응답 메시지를 제공하는 웹 서버로 전송합니다.
+서버 측 코드는 HTTP 요청 메시지를 수신하고 HTTP 응답 메시지를 반환합니다.
 
-HTTP messages are typically abstracted from the end-user consumer, but as
-developers, we typically need to know how they are structured and how to
-access or manipulate them in order to perform our tasks, whether that might be
-making a request to an HTTP API, or handling an incoming request.
+HTTP 메시지는 일반적으로 최종 사용자로부터 요청(abstracted)되지만 개발자들은 일반적으로 HTTP API에 요청을 하거나 들어오는 요청을 처리하는 등의 작업을 수행하기 위해 구조화 방법과 이를 액세스하거나 조작하는 방법을 알아야합니다.
 
-Every HTTP request message has a specific form:
+모든 HTTP 요청 메시지에는 다음과 같은 특정 형식이 있습니다.
 
 ~~~http
 POST /path HTTP/1.1
@@ -30,12 +24,10 @@ Host: example.com
 foo=bar&baz=bat
 ~~~
 
-The first line of a request is the "request line", and contains, in order, the
-HTTP request method, the request target (usually either an absolute URI or a
-path on the web server), and the HTTP protocol version. This is followed by one
-or more HTTP headers, an empty line, and the message body.
+첫 번째 요청 줄은 "요청 줄(request line)"이며 HTTP 요청 방법(request method), 요청 대상 (일반적으로 URI의 절대값 또는 웹 서버의 경로) 및 HTTP 프로토콜 버전을 순서대로 포함합니다.
+그 뒤에는 하나 이상의 HTTP 헤더, 빈 행 및 메시지 본문이옵니다.
 
-HTTP response messages have a similar structure:
+HTTP 응답 메시지는 다음과 유사한 구조를 가집니다.
 
 ~~~http
 HTTP/1.1 200 OK
@@ -43,18 +35,15 @@ Content-Type: text/plain
 
 This is the response body
 ~~~
+ 
+첫 번째 줄은 "상태 줄"이며 HTTP 프로토콜 버전, HTTP 상태 코드 및 사람이 읽을 수있는 상태 코드 설명 인 "이유 구문"을 순서대로 포함합니다.
+HTTP 요청 메시지와 마찬가지로 하나 이상의 HTTP 헤더, 빈 행 및 메시지 본문이옵니다.
 
-The first line is the "status line", and contains, in order, the HTTP protocol
-version, the HTTP status code, and a "reason phrase," a human-readable
-description of the status code. Like the request message, this is then
-followed by one or more HTTP headers, an empty line, and the message body.
+이 문서에서 설명하는 인터페이스는 HTTP 메시지 및 HTTP 메시지를 구성하는 요소를 추상화 한 것입니다.
 
-The interfaces described in this document are abstractions around HTTP messages
-and the elements composing them.
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
-interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
+이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
+이것은 [RFC 2119](http://tools.ietf.org/html/rfc2119)에 설명 된대로 해석해야 합니다.
+`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
 
 ### References
 
@@ -63,31 +52,26 @@ interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
 - [RFC 7230](http://tools.ietf.org/html/rfc7230)
 - [RFC 7231](http://tools.ietf.org/html/rfc7231)
 
-## 1. Specification
+## 1. 명세서
 
 ### 1.1 Messages
 
-An HTTP message is either a request from a client to a server or a response from
-a server to a client. This specification defines interfaces for the HTTP messages
-`Psr\Http\Message\RequestInterface` and `Psr\Http\Message\ResponseInterface` respectively.
+HTTP 메시지는 클라이언트에서 서버로의 요청 또는 서버에서 클라이언트로의 응답을 의미합니다.
+이 사양은 HTTP 메시지 `Psr\Http\Message\RequestInterface` 와 `Psr\Http\Message\ResponseInterface` 에 대한 인터페이스를 각각 정의합니다.
 
-Both `Psr\Http\Message\RequestInterface` and `Psr\Http\Message\ResponseInterface` extend
-`Psr\Http\Message\MessageInterface`. While `Psr\Http\Message\MessageInterface` MAY be
-implemented directly, implementors SHOULD implement
-`Psr\Http\Message\RequestInterface` and `Psr\Http\Message\ResponseInterface`.
+`Psr\Http\Message\RequestInterface` 와 `Psr\Http\Message\ResponseInterface` 는 모두 `Psr\Http\Message\MessageInterface`를 상속받습니다(extend).
+`Psr\Http\Message\MessageInterface` 는 직접 구현 해도 되지만(MAY), 구현자는 `Psr\Http\Message\RequestInterface` 와 `Psr\Http\Message\ResponseInterface` 를 구현해야합니다 (SHOULD).
 
-From here forward, the namespace `Psr\Http\Message` will be omitted when
-referring to these interfaces.
+앞으로 이 인터페이스들을 말 할 때 `Psr\Http\Message` 네임 스페이스는 생략 할 것입니다.
 
 ### 1.2 HTTP Headers
 
-#### Case-insensitive header field names
+#### 대소문자를 구분하지 않는 헤더 필드 이름
 
-HTTP messages include case-insensitive header field names. Headers are retrieved
-by name from classes implementing the `MessageInterface` in a case-insensitive
-manner. For example, retrieving the `foo` header will return the same result as
-retrieving the `FoO` header. Similarly, setting the `Foo` header will overwrite
-any previously set `foo` header value.
+HTTP 메시지에는 대소문자를 구분하지 않는 헤더 필드 이름을 포함합니다.
+`MessageInterface` 를 구현하는 클래스에서 헤더를 대문자와 소문자를 구분하지 않는 이름으로 검색합니다.
+예를 들어 `foo` 헤더를 검색하는 것은 `FoO` 헤더를 검색하는 것과 같은 결과를 반환합니다.
+비슷하게 `Foo` 헤더를 설정하면 이전에 설정된 `foo` 헤더 값을 덮어 씁니다.
 
 ~~~php
 $message = $message->withHeader('foo', 'bar');
@@ -103,23 +87,19 @@ echo $message->getHeaderLine('foo');
 // Outputs: baz
 ~~~
 
-Despite that headers may be retrieved case-insensitively, the original case
-MUST be preserved by the implementation, in particular when retrieved with
-`getHeaders()`.
+헤더는 대소문자의 구분 없이 검색할 수 있지만, `getHeaders()` 로 가져올 경우는 원래의 대소문자가 유지되어야만 합니다 (MUST).
 
-Non-conforming HTTP applications may depend on a certain case, so it is useful
-for a user to be able to dictate the case of the HTTP headers when creating a
-request or response.
+부적합한 HTTP 프로그램은 특정 경우에 따라 달라질 수 있으므로 사용자가 요청이나 응답을 만들 때 HTTP 헤더의 대소문자를 지정할 수 있는 것이 좋습니다.
 
-#### Headers with multiple values
+#### 여러개의 값을 가진 헤더
 
-In order to accommodate headers with multiple values yet still provide the
-convenience of working with headers as strings, headers can be retrieved from
-an instance of a `MessageInterface` as an array or a string. Use the
-`getHeaderLine()` method to retrieve a header value as a string containing all
-header values of a case-insensitive header by name concatenated with a comma.
-Use `getHeader()` to retrieve an array of all the header values for a
-particular case-insensitive header by name.
+In order to accommodate headers with multiple values yet still provide the convenience of working with headers as strings, headers can be retrieved from an instance of a `MessageInterface` as an array or a string. 
+Use the `getHeaderLine()` method to retrieve a header value as a string containing all header values of a case-insensitive header by name concatenated with a comma.
+Use `getHeader()` to retrieve an array of all the header values for a particular case-insensitive header by name.
+
+여러개의 값을 가진 헤더를 수용하면서도 헤더로 문자열 작업을 할 수있는 편리함을 제공하기 위해, 배열이나 문자열로 `MessageInterface` 의 인스턴스에서 헤더를 검색 할 수 있습니다.
+`getHeaderLine()` 메서드를 사용하여, 대소문자를 구분하지 않는 헤더의 이름으로 검색한 결과 값을 모두 쉼표로 연결한 문자열을 가져옵니다.
+대문자와 소문자를 구분하지 않는 헤더의 모든 헤더 값의 배열을 이름으로 검색하려면 `getHeader()`를 사용하십시오.
 
 ~~~php
 $message = $message
@@ -133,32 +113,24 @@ $header = $message->getHeader('foo');
 // ['bar', 'baz']
 ~~~
 
-Note: Not all header values can be concatenated using a comma (e.g.,
-`Set-Cookie`). When working with such headers, consumers of
-`MessageInterface`-based classes SHOULD rely on the `getHeader()` method
-for retrieving such multi-valued headers.
+참고 : 모든 헤더 값을 쉼표 (예 :`Set-Cookie`)를 사용하여 연결할 수있는 것은 아닙니다.
+이러한 헤더로 작업 할 때 `MessageInterface` 기반의 클래스는 이러한 다중 값 헤더를 검색하기 위해 `getHeader()` 메소드에 의존해야합니다 (SHOULD).
 
-#### Host header
+#### Host 헤더
 
-In requests, the `Host` header typically mirrors the host component of the URI, as
-well as the host used when establishing the TCP connection. However, the HTTP
-specification allows the `Host` header to differ from each of the two.
+요청에서 `Host` 헤더는 일반적으로 URI의 호스트 구성 부분만 아니라 TCP 연결 할 때 사용하는 호스트를 포함합니다.
+그러나 HTTP 사양(specification)에서는 `Host` 헤더가 각각 다른 것을 허용하고 있습니다. `역자주: TCP 연결에 사용된 URI와 Http Requeser의 Host Header의 값이 다른 것을 허용합니다`
 
-During construction, implementations MUST attempt to set the `Host` header from
-a provided URI if no `Host` header is provided.
+그래서 구현시 `Host` 헤더가 제공되지 않으면 제공된 URI에서 `Host` 헤더를 가져와야 합니다 (MUST).
 
-`RequestInterface::withUri()` will, by default, replace the returned request's
-`Host` header with a `Host` header matching the host component of the passed
-`UriInterface`.
+기본적으로 `RequestInterface::withUri()`은 요청의 `Host` 헤더의 값을 전달 된 `UriInterface` 의 호스트 구성 요소와 일치하는 `Host` 헤더로 대체합니다.
 
-You can opt-in to preserving the original state of the `Host` header by passing
-`true` for the second (`$preserveHost`) argument. When this argument is set to
-`true`, the returned request will not update the `Host` header of the returned
-message -- unless the message contains no `Host` header.
+두 번째 인수(`$preserveHost`)에 `true` 를 전달하여 `Host` 헤더의 원래 상태를 보존하도록 선택할 수 있습니다.
+이 인수를 `true` 로 설정하면 반환 하는 메시지의 `Host` 헤더를 업데이트하지 않습니다. 
+단, 메시지에 `Host` 헤더가 포함되어 있지 않으면 예외입니다.
 
-This table illustrates what `getHeaderLine('Host')` will return for a request
-returned by `withUri()` with the `$preserveHost` argument set to `true` for
-various initial requests and URIs.
+이 테이블은 다양한 초기 요청과 URI에 대해 `$preserveHost` 인자가 `true` 로 설정된 `withUri()` 에 의해 반환 된 요청에 대해 `getHeaderLine('Host')` 가 반환하는 것을 보여줍니다.
+
 
 Request Host header<sup>[1](#rhh)</sup> | Request host component<sup>[2](#rhc)</sup> | URI host component<sup>[3](#uhc)</sup> | Result
 ----------------------------------------|--------------------------------------------|----------------------------------------|--------
@@ -168,94 +140,64 @@ Request Host header<sup>[1](#rhh)</sup> | Request host component<sup>[2](#rhc)</
 foo.com                                 | ''                                         | bar.com                                | foo.com
 foo.com                                 | bar.com                                    | baz.com                                | foo.com
 
-- <sup id="rhh">1</sup> `Host` header value prior to operation.
-- <sup id="rhc">2</sup> Host component of the URI composed in the request prior
-  to the operation.
-- <sup id="uhc">3</sup> Host component of the URI being injected via
-  `withUri()`.
+- <sup id="rhh">1</sup> 변경이 일어나기 전의 `Host` 헤더 값
+- <sup id="rhc">2</sup> 변경 전에 요청으로 작성된 URI의 Host 구성 요소.
+- <sup id="uhc">3</sup> `withUri()` 를 통해 주입되는 URI의 Host 구성 요소.
 
 ### 1.3 Streams
 
-HTTP messages consist of a start-line, headers, and a body. The body of an HTTP
-message can be very small or extremely large. Attempting to represent the body
-of a message as a string can easily consume more memory than intended because
-the body must be stored completely in memory. Attempting to store the body of a
-request or response in memory would preclude the use of that implementation from
-being able to work with large message bodies. `StreamInterface` is used in
-order to hide the implementation details when a stream of data is read from
-or written to. For situations where a string would be an appropriate message
-implementation, built-in streams such as `php://memory` and `php://temp` may be
-used.
+HTTP 메시지는 시작 줄, 헤더 및 본문으로 구성됩니다.
+HTTP 메시지 본문은 매우 작거나 매우 클 수 있습니다.
+본문의 메시지를 문자열로 변환하려고하면 본문이 완전히 메모리에 저장되어야하기 때문에 의도 한 것보다 많은 메모리를 쉽게 써버릴 수 있습니다.
+요청이나 응답의 본문을 메모리에 저장하려고 하면 배제되어 해당 구현을 사용하여 큰 메시지 본문을 처리 할 수 있게됩니다. `역자주: 자연스럽게 번역하려면 배제된다는 표현을 다른 것으로 바꾸는게 좋아보이지만 답을 못찾았습니다`
+`StreamInterface`는 데이터 스트림을 읽거나 쓸 때 구현 세부 사항을 감추기 위해 사용합니다.
+문자열이 적절한 메시지 구현이된다면, `php://memory` 와 `php://temp`와 같은 내장 스트림을 사용할 수 있습니다.
 
-`StreamInterface` exposes several methods that enable streams to be read
-from, written to, and traversed effectively.
+`StreamInterface`는 스트림을 효율적으로 읽고, 쓰고, 지나갈 수 있게 해주는 몇가지 메소드를 제공줍니다.
 
-Streams expose their capabilities using three methods: `isReadable()`,
-`isWritable()`, and `isSeekable()`. These methods can be used by stream
-collaborators to determine if a stream is capable of their requirements.
+스트림은 `isReadable()`, `isWritable()` 및 `isSeekable()`의 세 가지 메소드를 사용합니다
+이 메소드는 스트림 작업자가 스트림이 자신의 요구 사항을 충족하는지 확인하는 데 사용할 수 있습니다.
 
-Each stream instance will have various capabilities: it can be read-only,
-write-only, or read-write. It can also allow arbitrary random access (seeking
-forwards or backwards to any location), or only sequential access (for
-example in the case of a socket, pipe, or callback-based stream).
+각 스트림 인스턴스에는 읽기 전용, 쓰기 전용 또는 읽기 / 쓰기가 가능한 다양한 기능이 있습니다.
+또한 임의의 임의 액세스 (모든 위치를 앞뒤로 검색) 또는 순차 액세스 (예 : 소켓, 파이프 또는 콜백 기반 스트림의 경우) 만 허용 할 수 있습니다.
 
-Finally, `StreamInterface` defines a `__toString()` method to simplify
-retrieving or emitting the entire body contents at once.
+마지막으로, `StreamInterface` 는 전체 본문 내용을 즉시 검색하거나 내보내는 것을 단순화하는 `__toString ()` 메소드를 제공합니다.
 
-Unlike the request and response interfaces, `StreamInterface` does not model
-immutability. In situations where an actual PHP stream is wrapped, immutability
-is impossible to enforce, as any code that interacts with the resource can
-potentially change its state (including cursor position, contents, and more).
-Our recommendation is that implementations use read-only streams for
-server-side requests and client-side responses. Consumers should be aware of
-the fact that the stream instance may be mutable, and, as such, could alter
-the state of the message; when in doubt, create a new stream instance and attach
-it to a message to enforce state.
+요청과 응답 인터페이스와 달리,`StreamInterface`는 불변성을 모델링하지 않습니다.
+실제 PHP 스트림이 래핑 된 상황에서는 자원과 상호 작용하는 모든 코드가 커서 상태, 내용 등을 포함하여 상태를 변경시킬 수 있으므로 변경이 불가능합니다.
+구현시 서버 측 요청 및 클라이언트 측 응답에 읽기 전용 스트림을 사용하는 것이 좋습니다.
+사용자는 스트림 인스턴스가 변경 될 수 있으며 메시지 상태를 변경할 수 있다는 사실을 알고 있어야합니다. 의심스럽다면 새 스트림 인스턴스를 만들어 메시지에 첨부하여 상태를 적용합니다.
+
 
 ### 1.4 Request Targets and URIs
 
-Per RFC 7230, request messages contain a "request-target" as the second segment
-of the request line. The request target can be one of the following forms:
+RFC 7230에 따라 요청 메시지에는 요청 줄의 두 번째 세그먼트로 "요청 대상"이 포함됩니다.
+요청 대상은 다음 형식 중 하나 일 수 있습니다.
 
-- **origin-form**, which consists of the path, and, if present, the query
-  string; this is often referred to as a relative URL. Messages as transmitted
-  over TCP typically are of origin-form; scheme and authority data are usually
-  only present via CGI variables.
-- **absolute-form**, which consists of the scheme, authority
-  ("[user-info@]host[:port]", where items in brackets are optional), path (if
-  present), query string (if present), and fragment (if present). This is often
-  referred to as an absolute URI, and is the only form to specify a URI as
-  detailed in RFC 3986. This form is commonly used when making requests to
-  HTTP proxies.
-- **authority-form**, which consists of the authority only. This is typically
-  used in CONNECT requests only, to establish a connection between an HTTP
-  client and a proxy server.
-- **asterisk-form**, which consists solely of the string `*`, and which is used
-  with the OPTIONS method to determine the general capabilities of a web server.
+- **origin-form** : 경로와 쿼리스트링 (있을 경우)으로 구성됩니다. 이를 보통 상대 URL이라고 합니다.
+  TCP를 통해 전송되는 메시지는 일반적으로 **origin-form**입니다. 스키마(scheme) 및 권한 데이터는 일반적으로 CGI 변수를 통해서만 표현합니다.
+- **absolute-form** : ("[user-info@]호스트[:port]", 대괄호 안의 항목은 선택 사항), 경로 (있는 경우), 쿼리스트링 (있는 경우) 및 fragment (있는 경우)으로 구성됩니다. `역자주: fragment는 URI의 #(hash) 문자열로 생각하시면 됩니다`
+  이것은 절대 URI라고도하며 RFC 3986에서 지정하는 유일한 URI 형식입니다.
+  이 양식은 HTTP 프록시에 요청할 때 일반적으로 사용됩니다.
+- **authority-form** : 권한으로만 구성되어있습니다. 이것은 일반적으로 HTTP 클라이언트와 프록시 서버 사이의 연결을 설정하기 위한 CONNECT 요청에만 사용됩니다.
+- **asterisk-form** : 이것은 문자열 `*` 로만 구성되며 웹 서버의 일반적인 기능을 결정하기 위해 OPTIONS 메서드와 함께 사용됩니다.
 
-Aside from these request-targets, there is often an 'effective URL' which is
-separate from the request target. The effective URL is not transmitted within
-an HTTP message, but it is used to determine the protocol (http/https), port
-and hostname for making the request.
+이러한 요청 대상 외에도 요청 대상과는 별도로 '유효한(effective) URL'이 있는 경우가 종종 있습니다.
+유효한(effective) URL은 HTTP 메시지 내에서 전송되지 않지만 요청을 하기위한 프로토콜 (http/https), 포트 및 호스트 이름을 결정하는 데 사용됩니다.
 
-The effective URL is represented by `UriInterface`. `UriInterface` models HTTP
-and HTTPS URIs as specified in RFC 3986 (the primary use case). The interface
-provides methods for interacting with the various URI parts, which will obviate
-the need for repeated parsing of the URI. It also specifies a `__toString()`
-method for casting the modeled URI to its string representation.
+유효한(effective) URL은 `UriInterface` 에 의해 표현됩니다.
+`UriInterface` 는 RFC 3986 (첫번째 사용 사례)에 명시된대로 HTTP와 HTTPS URI를 모델링합니다.
+이 인터페이스는 다양한 URI 부분과 상호 작용하기위한 메소드를 제공하여 URI의 반복 구문 분석의 필요성을 없애줍니다.
+또한 모델링 된 URI를 문자열 표현으로 변환하기위한 `__toString()` 메소드를 제공합니다.
 
-When retrieving the request-target with `getRequestTarget()`, by default this
-method will use the URI object and extract all the necessary components to
-construct the _origin-form_. The _origin-form_ is by far the most common
-request-target.
+`getRequestTarget()`으로 request-target을 검색 할 때, 이 메소드는 기본적으로 URI 객체를 사용하고 **origin-form**을 구성하는 데 필요한 모든 구성 요소를 추출합니다.
+**origin-form**은 가장 일반적인 요청 대상입니다.
 
-If it's desired by an end-user to use one of the other three forms, or if the
-user wants to explicitly override the request-target, it is possible to do so
-with `withRequestTarget()`.
+최종 사용자가 다른 세 가지 형식 중 하나를 사용하기를 원하거나 사용자가 명시적으로 요청 대상을 덮어쓰고 싶다면 `withRequestTarget()`을 사용하여 이를 처리 할 수 있습니다. `역자주: 세가지 형식이란 위에 나오는 네가지 형식 중 **origin-form**을 제외한 세가지를 말합니다`
 
-Calling this method does not affect the URI, as it is returned from `getUri()`.
+이 메소드를 호출하면 `getUri()`로부터 반환받는 URI에 영향을 주지 않습니다.
 
-For example, a user may want to make an asterisk-form request to a server:
+예를 들어, 사용자는 아래와 같이 서버에 **asterisk-form** 요청을 할 수 있습니다.
 
 ~~~php
 $request = $request
@@ -264,76 +206,48 @@ $request = $request
     ->withUri(new Uri('https://example.org/'));
 ~~~
 
-This example may ultimately result in an HTTP request that looks like this:
-
+이 예제는 최종적으로 다음과 같은 결과를 얻을 수 있습니다.
 ~~~http
 OPTIONS * HTTP/1.1
 ~~~
 
-But the HTTP client will be able to use the effective URL (from `getUri()`),
-to determine the protocol, hostname and TCP port.
+하지만 HTTP 클라이언트는 유효한(effective) URL (`getUri()`로부터)을 사용하여 프로토콜, 호스트 이름 및 TCP 포트를 결정할 수 있습니다.
 
-An HTTP client MUST ignore the values of `Uri::getPath()` and `Uri::getQuery()`,
-and instead use the value returned by `getRequestTarget()`, which defaults
-to concatenating these two values.
+HTTP 클라이언트는 반드시 `Uri::getPath()` 와 `Uri::getQuery()` 의 값을 무시해야하며(MUST), 대신 `getRequestTarget()` 에 의해 반환 된 값을 사용해야합니다. 기본값은 이 두 값을 연결한 것입니다.
 
-Clients that choose to not implement 1 or more of the 4 request-target forms,
-MUST still use `getRequestTarget()`. These clients MUST reject request-targets
-they do not support, and MUST NOT fall back on the values from `getUri()`.
+네 개의 요청 대상 폼 중 하나 이상을 구현하지 않기로 결정한 클라이언트는 여전히 `getRequestTarget()` 을 사용해야한다(MUST).
+이들 클라이언트는 지원하지 않는 요청 대상을 거부해야하며(MUST) 반드시 `getUri()` 의 값으로 폴백해서는 안된다(MUST NOT).
 
-`RequestInterface` provides methods for retrieving the request-target or
-creating a new instance with the provided request-target. By default, if no
-request-target is specifically composed in the instance, `getRequestTarget()`
-will return the origin-form of the composed URI (or "/" if no URI is composed).
-`withRequestTarget($requestTarget)` creates a new instance with the
-specified request target, and thus allows developers to create request messages
-that represent the other three request-target forms (absolute-form,
-authority-form, and asterisk-form). When used, the composed URI instance can
-still be of use, particularly in clients, where it may be used to create the
-connection to the server.
+`RequestInterface`는 요청 대상을 검색하거나 제공된 요청 대상으로 새로운 인스턴스를 생성하기위한 메소드를 제공합니다.
+기본적으로 요청 대상이 인스턴스에서 특별히 구성되지 않으면, `getRequestTarget()`은 구성된 URI의 **origin-form**을 반환할 것입니다. (URI가 구성되지 않으면 "/").
+`withRequestTarget($requestTarget)` 은 지정된 요청 대상으로 새로운 인스턴스를 생성하고, 개발자가 다른 3 개의 요청 대상 형식 (absolute-form, authority-form 및 asterisk-form)을 나타내는 요청 메시지를 생성 할 수 있도록합니다.
+사용되는 경우 구성된 URI 인스턴스는 여전히 클라이언트에서 사용할 수 있습니다.이 인스턴스는 서버에 대한 연결을 만드는 데 사용될 수 있습니다.
 
 ### 1.5 Server-side Requests
 
-`RequestInterface` provides the general representation of an HTTP request
-message. However, server-side requests need additional treatment, due to the
-nature of the server-side environment. Server-side processing needs to take into
-account Common Gateway Interface (CGI), and, more specifically, PHP's
-abstraction and extension of CGI via its Server APIs (SAPI). PHP has provided
-simplification around input marshaling via superglobals such as:
+`RequestInterface` 는 HTTP 요청 메시지의 일반적인 표현을 제공합니다.
+그러나 서버 측 요청의 경우 서버 측 환경의 특성상 추가 처리가 필요합니다.
+서버 측 프로세싱은 CGI (Common Gateway Interface)를 고려해야하며 PHP의 SAPI(Server APIs)를 통한 CGI의 추상화 및 확장이 필요합니다.
+PHP는 다음과 같은 슈퍼 전역 변수를 통해 입력을 정렬하고 단순화했습니다.
 
-- `$_COOKIE`, which deserializes and provides simplified access to HTTP
-  cookies.
-- `$_GET`, which deserializes and provides simplified access to query string
-  arguments.
-- `$_POST`, which deserializes and provides simplified access for urlencoded
-  parameters submitted via HTTP POST; generically, it can be considered the
-  results of parsing the message body.
-- `$_FILES`, which provides serialized metadata around file uploads.
-- `$_SERVER`, which provides access to CGI/SAPI environment variables, which
-  commonly include the request method, the request scheme, the request URI, and
-  headers.
+- `$ _COOKIE` : 역직렬화된 HTTP 쿠키에 대한 단순화 된 접근을 제공합니다.
+- `$ _GET` : 역직렬화된 쿼리스트링 인수에 대한 단순화 된 접근을 제공합니다.
+- `$ _POST` : 역직렬화된 HTTP POST를 통해 제출 된 urlencoded 매개 변수에 대해 단순화 된 액세스를 제공합니다. 일반적으로 메시지 본문을 파싱 한 결과로 간주 될 수 있습니다.
+- `$ _FILES` : 파일 업로드와 관련된 일련의 메타 데이터를 제공합니다.
+- `$ _SERVER` : CGI / SAPI 환경 변수에 대한 액세스를 제공합니다. 일반적으로 요청 메소드, 요청 스킴, 요청 URI 및 헤더가 포함됩니다.
 
-`ServerRequestInterface` extends `RequestInterface` to provide an abstraction
-around these various superglobals. This practice helps reduce coupling to the
-superglobals by consumers, and encourages and promotes the ability to test
-request consumers.
-
-The server request provides one additional property, "attributes", to allow
-consumers the ability to introspect, decompose, and match the request against
-application-specific rules (such as path matching, scheme matching, host
-matching, etc.). As such, the server request can also provide messaging between
-multiple request consumers.
+`ServerRequestInterface` 는 `RequestInterface` 를 확장하여 이러한 다양한 슈퍼 전역 변수를 추상화합니다.
+이 방법은 사용자가 슈퍼 전역변수에 연결(coupling)하는 것을 줄이고 요청 사용자가 테스트하는 것을 권장하고 도와줍니다.
+서버 요청은 "속성(attributes)"이라는 추가 속성 하나를 제공하여 소비자가 응용 프로그램 관련 규칙 (예 : 경로(path) 일치, scheme 일치, 호스트 일치 등)에 대한 인트로스펙트(introspect), 분해(decompose) 및 일치(match) 기능을 제공합니다.
+따라서 서버 요청은 여러 요청자간에 메시징을 제공 할 수도 있습니다.
 
 ### 1.6 Uploaded files
 
-`ServerRequestInterface` specifies a method for retrieving a tree of upload
-files in a normalized structure, with each leaf an instance of
-`UploadedFileInterface`.
+`ServerRequestInterface` 는 각 가지(leaf)가 `UploadedFileInterface` 인스턴스로 정규화 된 구조로 업로드 파일 트리를 검색하는 메소드를 제공합니다.
 
-The `$_FILES` superglobal has some well-known problems when dealing with arrays
-of file inputs. As an example, if you have a form that submits an array of files
-— e.g., the input name "files", submitting `files[0]` and `files[1]` — PHP will
-represent this as:
+As an example, if you have a form that submits an array of files — e.g., the input name "files", submitting `files[0]` and `files[1]` — PHP will represent this as:
+`$_FILES` 슈퍼 전역변수는 파일 입력 배열을 다룰 때 잘 알려진 문제점을 가지고 있습니다.
+예를 들어, 파일의 배열 (예 : 입력 이름이 "files"인 경우, `files[0]` 및 `files[1]`)을 제출하는 폼이 있는 경우 PHP는 다음과 같이 표현합니다.
 
 ~~~php
 array(
@@ -351,7 +265,7 @@ array(
 )
 ~~~
 
-instead of the expected:
+아래와 같이 예상되는 것 대신 말이죠
 
 ~~~php
 array(
@@ -370,44 +284,36 @@ array(
 )
 ~~~
 
-The result is that consumers need to know this language implementation detail,
-and write code for gathering the data for a given upload.
+결과적으로 사용자는 이 언어 구현 세부 사항을 알아야하고 주어진 업로드에 대한 데이터를 수집하기위한 코드를 작성해야합니다.
 
-Additionally, scenarios exist where `$_FILES` is not populated when file uploads
-occur:
+또한 아래와 같은 파일 업로드를 했을 때 `$ _FILES` 가 비어있는 경우가 있습니다
 
-- When the HTTP method is not `POST`.
-- When unit testing.
-- When operating under a non-SAPI environment, such as [ReactPHP](http://reactphp.org).
+- HTTP method가 `POST` 아닐 때.
+- 유닛 테스팅 중일 때.
+- [ReactPHP](http://reactphp.org)와 같은 SAPI가 아닌 환경에서 작동 할 때.
 
-In such cases, the data will need to be seeded differently. As examples:
+이 경우 데이터를 다르게 시드해야합니다.
+예를 들면 다음과 같습니다.
 
-- A process might parse the message body to discover the file uploads. In such
-  cases, the implementation may choose *not* to write the file uploads to the
-  file system, but instead wrap them in a stream in order to reduce memory,
-  I/O, and storage overhead.
-- In unit testing scenarios, developers need to be able to stub and/or mock the
-  file upload metadata in order to validate and verify different scenarios.
+- 프로세스가 메시지 본문을 구문 분석하여 파일 업로드를 발견 할 수 있습니다.
+이 경우 구현은 파일 업로드를 파일 시스템에 쓰지 *않고* 대신 메모리, I/O 및 저장소 오버 헤드를 줄이기 위해 스트림으로 래핑하도록 선택할 수 있습니다.
+- 단위 테스트 시나리오에서 개발자는 다른 시나리오의 유효성을 검사하고 검증하기 위해 파일 업로드 메타 데이터를 스텁(stub) 또는 모의(mock) 할 수 있어야합니다.
 
-`getUploadedFiles()` provides the normalized structure for consumers.
-Implementations are expected to:
+`getUploadedFiles ()`는 사용자를 위해 정규화 된 구조를 제공합니다.
+구현은 다음을 기대 합니다.
 
-- Aggregate all information for a given file upload, and use it to populate a
-  `Psr\Http\Message\UploadedFileInterface` instance.
-- Re-create the submitted tree structure, with each leaf being the appropriate
-  `Psr\Http\Message\UploadedFileInterface` instance for the given location in
-  the tree.
+- 주어진 파일 업로드에 대한 모든 정보를 모아서 `Psr\Http\Message\UploadedFileInterface` 인스턴스를 채웁니다.
+- 전송된 트리 구조를 재작성합니다. 각 리프는 트리의 주어진 위치에 대한 적절한 `Psr\Http\Message\UploadedFileInterface` 인스턴스입니다.
 
-The tree structure referenced should mimic the naming structure in which files
-were submitted.
+참조 된 트리 구조는 파일이 제출 된 명명 구조를 모방해야합니다.
 
-In the simplest example, this might be a single named form element submitted as:
+가장 단순한 예를 들어서, 이것은 다음과 같이 제출 된 단일 명명 된 양식 요소(form element) 일 수 있습니다.
 
 ~~~html
 <input type="file" name="avatar" />
 ~~~
 
-In this case, the structure in `$_FILES` would look like:
+이 경우, `$_FILES`의 구조는 다음과 같습니다
 
 ~~~php
 array(
@@ -421,7 +327,7 @@ array(
 )
 ~~~
 
-The normalized form returned by `getUploadedFiles()` would be:
+`getUploadedFiles()` 에 의해 반환된 정규화된 양식은 다음과 같습니다
 
 ~~~php
 array(
@@ -429,13 +335,13 @@ array(
 )
 ~~~
 
-In the case of an input using array notation for the name:
+이름에 배열 표기법을 사용하는 입력의 경우
 
 ~~~html
 <input type="file" name="my-form[details][avatar]" />
 ~~~
 
-`$_FILES` ends up looking like this:
+`$_FILES`은 다음과 같이 보입니다
 
 ~~~php
 array(
@@ -453,7 +359,7 @@ array(
 )
 ~~~
 
-And the corresponding tree returned by `getUploadedFiles()` should be:
+그리고 `getUploadedFiles()` 에 의해 반환 된 트리는 다음과 같아야합니다
 
 ~~~php
 array(
@@ -465,19 +371,17 @@ array(
 )
 ~~~
 
-In some cases, you may specify an array of files:
+경우에 따라 다음과 같이 파일 배열을 지정할 수 있습니다.
 
 ~~~html
 Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
 Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
 ~~~
 
-(As an example, JavaScript controls might spawn additional file upload inputs to
-allow uploading multiple files at once.)
+(예를 들어 자바스크립트를 사용해 추가 파일 업로드 인풋을 생성하여 한 번에 여러 파일을 업로드 할 수 있습니다.)
 
-In such a case, the specification implementation must aggregate all information
-related to the file at the given index. The reason is because `$_FILES` deviates
-from its normal structure in such cases:
+이 경우, 스펙 구현은 주어진 인덱스에있는 파일과 관련된 모든 정보를 집계해야합니다.
+왜냐하면 `$_FILES` 는 다음과 같은 경우 정상적인 구조에서 벗어났기 때문입니다
 
 ~~~php
 array(
@@ -515,8 +419,7 @@ array(
 )
 ~~~
 
-The above `$_FILES` array would correspond to the following structure as
-returned by `getUploadedFiles()`:
+위의 `$_FILES` 배열은 `getUploadedFiles()` 에 의해 반환 될 경우 다음 구조체에 해당합니다
 
 ~~~php
 array(
@@ -532,17 +435,15 @@ array(
 )
 ~~~
 
-Consumers would access index `1` of the nested array using:
+사용자는 다음을 사용하여 중첩 배열의 인덱스 `1`에 접근합니다.
 
 ~~~php
 $request->getUploadedFiles()['my-form']['details']['avatars'][1];
 ~~~
 
-Because the uploaded files data is derivative (derived from `$_FILES` or the
-request body), a mutator method, `withUploadedFiles()`, is also present in the
-interface, allowing delegation of the normalization to another process.
+업로드 된 파일 데이터는 파생물이므로 ( `$_FILES` 또는 요청 본문에서 파생 된), mutator 메소드 인 `withUploadedFiles()` 또한 인터페이스에 존재하므로 다른 프로세스에 대한 정규화를 위임 할 수 있습니다.
 
-In the case of the original examples, consumption resembles the following:
+원래 예제의 경우 사용은 다음과 유사합니다.
 
 ~~~php
 $file0 = $request->getUploadedFiles()['files'][0];
@@ -557,21 +458,17 @@ printf(
 // "Received the files file0.txt and file1.html"
 ~~~
 
-This proposal also recognizes that implementations may operate in non-SAPI
-environments. As such, `UploadedFileInterface` provides methods for ensuring
-operations will work regardless of environment. In particular:
+이 제안은 또한 구현이 비 SAPI 환경에서 작동 할 수 있음을 보장(recognizes)합니다.
+따라서 `UploadedFileInterface` 는 환경에 관계없이 작동이 작동 할 수 있도록 보장하는 메소드를 제공합니다.
+특히
 
-- `moveTo($targetPath)` is provided as a safe and recommended alternative to calling
-  `move_uploaded_file()` directly on the temporary upload file. Implementations
-  will detect the correct operation to use based on environment.
-- `getStream()` will return a `StreamInterface` instance. In non-SAPI
-  environments, one proposed possibility is to parse individual upload files
-  into `php://temp` streams instead of directly to files; in such cases, no
-  upload file is present. `getStream()` is therefore guaranteed to work
-  regardless of environment.
+- `moveTo($targetPath)` 는 임시 업로드 파일에 직접 `move_uploaded_file()`을 호출하는 안전하고 권장되는 대안으로 제공됩니다.
+구현체는 환경에 따라 사용할 올바른 작업을 감지합니다.
+- `getStream()` 은 `StreamInterface` 인스턴스를 리턴합니다.
+비 SAPI 환경에서 개별 업로드 파일을 직접 파일 대신에 `php://temp` 스트림으로 파싱하는 것이 제안되었습니다. 이 경우 업로드 파일이 없습니다.
+`getStream()`은 환경에 관계없이 작동하도록 보장됩니다.
 
-As examples:
-
+예를 들면 다음과 같습니다.
 ~~~
 // Move a file to an upload directory
 $filename = sprintf(
@@ -591,8 +488,7 @@ stream_copy_to_stream($stream, $s3wrapper);
 
 ## 2. Package
 
-The interfaces and classes described are provided as part of the
-[psr/http-message](https://packagist.org/packages/psr/http-message) package.
+설명 된 인터페이스와 클래스는 [psr/http-message](https://packagist.org/packages/psr/http-message) 패키지의 일부로 제공됩니다.
 
 ## 3. Interfaces
 
