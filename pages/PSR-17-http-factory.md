@@ -7,37 +7,31 @@ order: 17
 HTTP Factories
 ==============
 
-This document describes a common standard for factories that create [PSR-7][psr7]
-compliant HTTP objects.
+이 문서는 [PSR-7][psr7]에 호환하는 HTTP 객체를 만드는 팩토리의 공통 표준을 설명합니다.
 
-PSR-7 did not include a recommendation on how to create HTTP objects, which leads
-to difficulty when needing to create new HTTP objects within components that are
-not tied to a specific implementation of PSR-7.
+PSR-7은 HTTP 객체를 만드는 방법에 대한 권장 사항을 포함하지 않았기 때문에 PSR-7의 특정 구현과 관련되지 않은 구성 요소 내에 새로운 HTTP 객체를 생성해야 할 때 어려움을 겪습니다.
 
-The interfaces outlined in this document describe methods by which PSR-7 objects
-can be instantiated.
+이 문서에 설명 된 인터페이스는 PSR-7 객체를 인스턴스화 할 수있는 방법을 설명합니다.
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
-interpreted as described in [RFC 2119][rfc2119].
+이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
+이것은 [RFC 2119][rfc2119]에 설명 된대로 해석해야 합니다.
+`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
 
 [psr7]: https://www.php-fig.org/psr/psr-7/
 [rfc2119]: https://tools.ietf.org/html/rfc2119
 
-## 1. Specification
+## 1. 명세서
 
-An HTTP factory is a method by which a new HTTP object, as defined by PSR-7,
-is created. HTTP factories MUST implement these interfaces for each object type
-that is provided by the package.
+HTTP 팩토리는 PSR-7에 정의 된대로 새 HTTP 객체를 만드는 방법입니다.
+HTTP 팩토리는 패키지가 제공하는 각 객체 유형에 대해 이러한 인터페이스를 구현해야합니다 (MUST).
 
 ## 2. Interfaces
 
-The following interfaces MAY be implemented together within a single class or
-in separate classes.
+다음 인터페이스들은 단일 클래스 내에서 또는 별도의 클래스들 내에서 함께 구현 될 수있습니다 (MAY).
 
 ### 2.1 RequestFactoryInterface
 
-Has the ability to create client requests.
+클라이언트 요청을 생성하는 기능
 
 ```php
 namespace Psr\Http\Message;
@@ -59,7 +53,7 @@ interface RequestFactoryInterface
 
 ### 2.2 ResponseFactoryInterface
 
-Has the ability to create responses.
+응답을 생성하는 하는 기능
 
 ```php
 namespace Psr\Http\Message;
@@ -82,7 +76,7 @@ interface ResponseFactoryInterface
 
 ### 2.3 ServerRequestFactoryInterface
 
-Has the ability to create server requests.
+서버 요청을 생성하는 기능
 
 ```php
 namespace Psr\Http\Message;
@@ -110,7 +104,7 @@ interface ServerRequestFactoryInterface
 
 ### 2.4 StreamFactoryInterface
 
-Has the ability to create streams for requests and responses.
+요청 및 응답을 위한 스트림을 생성하는 기능
 
 ```php
 namespace Psr\Http\Message;
@@ -155,8 +149,8 @@ interface StreamFactoryInterface
 }
 ```
 
-Implementations of this interface SHOULD use a temporary stream when creating
-resources from strings. The RECOMMENDED method for doing so is:
+이 인터페이스의 구현은 문자열에서 리소스를 만들 때 임시 스트림을 사용해야합니다 (SHOULD).
+이렇게하는 권장 방법은 다음과 같습니다 (RECOMMENDED).
 
 ```php
 $resource = fopen('php://temp', 'r+');
@@ -164,7 +158,7 @@ $resource = fopen('php://temp', 'r+');
 
 ### 2.5 UploadedFileFactoryInterface
 
-Has the ability to create streams for uploaded files.
+업로드 된 파일의 스트림을 만들 수있는 기능
 
 ```php
 namespace Psr\Http\Message;
@@ -204,7 +198,7 @@ interface UploadedFileFactoryInterface
 
 ### 2.6 UriFactoryInterface
 
-Has the ability to creates URIs for client and server requests.
+클라이언트 및 서버 요청에 대한 URI를 생성하는 기능
 
 ```php
 namespace Psr\Http\Message;
