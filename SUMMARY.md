@@ -1,6 +1,6 @@
 # Summary
 
-### Accepted (승인 완료)
+## 승인 완료된 사항 (Accepted)
 
 * [PSR-0](accepted/PSR-0.md)
 * [PSR-1-basic-coding-standard](accepted/PSR-1-basic-coding-standard.md)
@@ -15,3 +15,8 @@
 * [PSR-15-request-handlers](accepted/PSR-15-request-handlers.md)
 * [PSR-16-simple-cache](accepted/PSR-16-simple-cache.md)
 * [PSR-17-http-factory](accepted/PSR-17-http-factory.md)
+
+
+## 참고자료
+
+* [RFC2119 한글번역본](https://techhtml.github.io/rfc/RFC2119.html)
