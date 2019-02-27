@@ -29,15 +29,15 @@ PHP 코드의 형식을 지정하는 방법에 대한 여러가지 규칙과 기
 
 - 클래스의 여는 중괄호는 다음 줄로 가야만 하며(MUST), 닫는 중괄호는 본문 뒤의 다음 줄로 가야만 합니다(MUST).
 
-- 메소드의 여는 중괄호는 다음 줄로 가야만 하며(MUST), 닫는 중괄호는 본문 뒤의 다음 줄로 가야만 합니다(MUST).
+- 메서드의 여는 중괄호는 다음 줄로 가야만 하며(MUST), 닫는 중괄호는 본문 뒤의 다음 줄로 가야만 합니다(MUST).
 
 - 모든 속성 및 메서드에서 가시성을 선언해야만 합니다 (MUST). `abstract`와`final`은 가시성 (visibility) 전에 선언되어야만 합니다(MUST). `static`은 가시성 뒤에 선언되어야만 합니다 (MUST).
 
-- 제어 구조 키워드는 그 뒤에 하나의 공백을 가져야만 합니다 (MUST). 메서드와 함수에서 해서는 안됩니다(MUST NOT). `역자주: if, switch, try, catch, foreach 등`
+- 제어문 키워드는 그 뒤에 하나의 공백을 가져야만 합니다 (MUST). 메서드와 함수에서 해서는 안됩니다(MUST NOT). `역자주: if, switch, try, catch, foreach 등`
 
-- 제어 구조를 여는 중괄호는 같은 줄에 있어야만 하며(MUST), 닫는 중괄호는 반드시 본문 뒤의 다음 줄로 가야만 합니다(MUST).
+- 제어문를 여는 중괄호는 같은 줄에 있어야만 하며(MUST), 닫는 중괄호는 반드시 본문 뒤의 다음 줄로 가야만 합니다(MUST).
 
-- 제어 구조를 여는 괄호는 그 뒤에 공백이 없어야만 하며(MUST NOT), 제어 구조에 대한 닫는 괄호는 전에는 공백이 없어야만 합니다(MUST NOT).
+- 제어문를 여는 괄호는 그 뒤에 공백이 없어야만 하며(MUST NOT), 제어문에 대한 닫는 괄호는 전에는 공백이 없어야만 합니다(MUST NOT).
 
 ### 1.1. 예제
 
@@ -75,62 +75,56 @@ class Foo extends Bar implements FooInterface
 
 ### 2.1. Basic Coding Standard
 
-Code MUST follow all rules outlined in [PSR-1].
+코드는 반드시(MUST) [PSR-1]에 요약 된 모든 규칙을 따라야합니다.
 
 ### 2.2. Files
 
-All PHP files MUST use the Unix LF (linefeed) line ending.
+모든 PHP 파일은 Unix LF (linefeed) 줄 끝을 사용해야합니다.
 
-All PHP files MUST end with a single blank line.
+모든 PHP 파일은 하나의 빈 줄을 가진 채로 끝나야합니다.
 
-The closing `?>` tag MUST be omitted from files containing only PHP.
+닫는 `?>` 태그는 PHP만 포함 된 파일일 경우 생략해야합니다 (MUST).
 
-### 2.3. Lines
+### 2.3. 라인 (Lines)
 
-There MUST NOT be a hard limit on line length.
+라인 길이에 엄격한 제한이 있어서는 안됩니다(MUST NOT).
 
-The soft limit on line length MUST be 120 characters; automated style checkers
-MUST warn but MUST NOT error at the soft limit.
+라인 길이에 대한 소프트 제한은 120 자 여야합니다(MUST). 자동화 된 스타일 검사기는 반드시(MUST) 경고해야하지만 소프트 한도에서 오류를 표시해서는 안됩니다(MUST NOT).
 
-Lines SHOULD NOT be longer than 80 characters; lines longer than that SHOULD
-be split into multiple subsequent lines of no more than 80 characters each.
+라인은 80자를 넘지 않아야합니다 (SHOULD NOT). 그보다 긴 행은 각각 80 문자 이하의 여러 행으로 나눠 져야합니다 (SHOULD).
 
-There MUST NOT be trailing whitespace at the end of non-blank lines.
+비어 있지 않은 라인 끝에는 공백 문자가 없어야합니다(MUST NOT).
 
-Blank lines MAY be added to improve readability and to indicate related
-blocks of code.
+가독성을 높이고 관련 코드 블록을 나타 내기 위해 빈 라인을 추가 할 수 있습니다 (MAY).
 
-There MUST NOT be more than one statement per line.
+한 라인에 하나 이상의 문장이 있어서는 안됩니다(MUST NOT).
 
-### 2.4. Indenting
+### 2.4. 들여쓰기 (Indenting)
 
-Code MUST use an indent of 4 spaces, and MUST NOT use tabs for indenting.
+코드는 반드시(MUST) 4 스페이스의 들여 쓰기를 사용해야하며, 들여 쓰기에는 탭을 사용하지 않아야합니다(MUST NOT).
 
-> N.b.: Using only spaces, and not mixing spaces with tabs, helps to avoid
-> problems with diffs, patches, history, and annotations. The use of spaces
-> also makes it easy to insert fine-grained sub-indentation for inter-line
-> alignment.
+> 공백 만 사용하고 탭과 공백을 섞지 않으면 diff, 패치, 히스토리 및 주석 문제를 피할 수 있습니다.
+> 공백을 사용하면 행간 정렬을 위해 세분화 된 하위 들여 쓰기를 쉽게 삽입 할 수 있습니다.
 
-### 2.5. Keywords and True/False/Null
+### 2.5. 예약어(Keywords)와 True/False/Null
 
-PHP [keywords] MUST be in lower case.
+PHP [예약어]는 소문자 여야합니다.
 
-The PHP constants `true`, `false`, and `null` MUST be in lower case.
+PHP 상수 `true`,`false` 및 `null`은 반드시(MUST) 소문자 여야합니다.
 
-[keywords]: http://php.net/manual/en/reserved.keywords.php
+[예약어]: http://php.net/manual/en/reserved.keywords.php
 
-## 3. Namespace and Use Declarations
+## 3. 네임 스페이스 및 사용 선언
 
-When present, there MUST be one blank line after the `namespace` declaration.
+네임스페이스가 존재할 때 `namespace` 선언 다음에 하나의 빈 라인이 있어야 합니다(MUST).
 
-When present, all `use` declarations MUST go after the `namespace`
-declaration.
+네임스페이스가 존재할 때, 모든 `use` 선언은 반드시 `namespace` 선언을 따라야 만합니다(MUST).
 
-There MUST be one `use` keyword per declaration.
+선언 하나당 하나의 `use` 키워드가 있어야합니다(MUST).
 
-There MUST be one blank line after the `use` block.
+`use` 블록 뒤에 빈 줄이 하나 있어야합니다(MUST).
 
-For example:
+예제 :
 
 ~~~php
 <?php
@@ -144,17 +138,16 @@ use OtherVendor\OtherPackage\BazClass;
 
 ~~~
 
-## 4. Classes, Properties, and Methods
+## 4. 클래스, 프로퍼티(Properties) 및 메서드
 
-The term "class" refers to all classes, interfaces, and traits.
+"클래스"라는 용어는 모든 클래스, 인터페이스 및 trait을 나타냅니다.
 
-### 4.1. Extends and Implements
+### 4.1. 확장 및 구현
 
-The `extends` and `implements` keywords MUST be declared on the same line as
-the class name.
+`extends`와 `implements` 키워드는 클래스 이름과 같은 라인에서 선언되어야합니다 (MUST).
 
-The opening brace for the class MUST go on its own line; the closing brace
-for the class MUST go on the next line after the body.
+해당 클래스의 여는 중괄호는 자체 줄에 있어야합니다(MUST).
+클래스의 닫는 중괄호는 본문 뒤의 다음 줄로 가야합니다(MUST).
 
 ~~~php
 <?php
@@ -170,9 +163,8 @@ class ClassName extends ParentClass implements \ArrayAccess, \Countable
 }
 ~~~
 
-Lists of `implements` MAY be split across multiple lines, where each
-subsequent line is indented once. When doing so, the first item in the list
-MUST be on the next line, and there MUST be only one interface per line.
+`implements`의 목록은 여러 줄에 걸쳐 나뉘어 질 수 있습니다. 각 줄은 한 번 들여 쓰기를 합니다.
+그렇게 할 때 목록의 첫 번째 항목은 다음 줄에 있어야하며 한 줄에 하나의 인터페이스 만 있어야합니다.
 
 ~~~php
 <?php
@@ -191,18 +183,17 @@ class ClassName extends ParentClass implements
 }
 ~~~
 
-### 4.2. Properties
+### 4.2. 프로퍼티(Properties)
 
-Visibility MUST be declared on all properties.
+모든 프로퍼티에서 가시성을 반드시 선언해야합니다(MUST).
 
-The `var` keyword MUST NOT be used to declare a property.
+`var` 키워드는 프로퍼티를 선언하는데 사용되어서는 안됩니다 (MUST NOT).
 
-There MUST NOT be more than one property declared per statement.
+명령문마다 하나 이상의 프로퍼티가 선언되어서는 안됩니다(MUST NOT).
 
-Property names SHOULD NOT be prefixed with a single underscore to indicate
-protected or private visibility.
+프로퍼티 이름은 protected 또는 private 가시성을 나타 내기 위해 하나의 밑줄이 붙어서는 안됩니다 (SHOULD NOT).
 
-A property declaration looks like the following.
+속성 선언은 다음과 같습니다.
 
 ~~~php
 <?php
@@ -216,18 +207,16 @@ class ClassName
 
 ### 4.3. Methods
 
-Visibility MUST be declared on all methods.
+모든 메서드는 가시성을 선언해야합니다 (MUST).
 
-Method names SHOULD NOT be prefixed with a single underscore to indicate
-protected or private visibility.
+메서드 이름은 protected 또는 private 가시성을 표현하기 위해 하나의 밑줄로 접두어를 사용해서는 안됩니다 (SHOULD NOT).
 
-Method names MUST NOT be declared with a space after the method name. The
-opening brace MUST go on its own line, and the closing brace MUST go on the
-next line following the body. There MUST NOT be a space after the opening
-parenthesis, and there MUST NOT be a space before the closing parenthesis.
+메서드 이름은 메서드 이름 다음에 공백으로 선언하면 안됩니다 (MUST NOT).
+여는 중괄호는 반드시 자신의 줄에 있어야하며(MUST) 닫는 중괄호는 반드시 그 다음 줄에 있어야합니다(MUST).
+여는 괄호 뒤에 공백이 있으면 안되며(MUST NOT) 닫는 괄호 앞에 공백이 있어서는 안됩니다(MUST NOT).
 
-A method declaration looks like the following. Note the placement of
-parentheses, commas, spaces, and braces:
+메서드 선언은 다음과 같습니다.
+괄호, 쉼표, 공백 및 중괄호의 배치에 유의하십시오.
 
 ~~~php
 <?php
@@ -242,13 +231,11 @@ class ClassName
 }
 ~~~
 
-### 4.4. Method Arguments
+### 4.4. 메서드 인수(Method Arguments)
 
-In the argument list, there MUST NOT be a space before each comma, and there
-MUST be one space after each comma.
+인수 목록에는 각 쉼표 앞에 공백이 있으면 안되며(MUST NOT) 각 쉼표 뒤에 하나의 공백이 있어야합니다(MUST).
 
-Method arguments with default values MUST go at the end of the argument
-list.
+디폴트 값을 가진 메서드 인수는 인수 목록의 끝에 와야합니다 (MUST).
 
 ~~~php
 <?php
@@ -263,13 +250,10 @@ class ClassName
 }
 ~~~
 
-Argument lists MAY be split across multiple lines, where each subsequent line
-is indented once. When doing so, the first item in the list MUST be on the
-next line, and there MUST be only one argument per line.
+인수 목록은 여러 줄에 걸쳐 나뉘어 질 수 있으며(MAY), 각 줄은 한 번 들여 쓰여질 수 있습니다.
+그렇게 할 때 목록의 첫 번째 항목은 다음 줄에 있어야하며(MUST) 한 줄에 하나의 인수 만 있어야합니다(MUST).
 
-When the argument list is split across multiple lines, the closing parenthesis
-and opening brace MUST be placed together on their own line with one space
-between them.
+인수 목록이 여러 줄에 걸쳐 분할되어 있으면 닫는 괄호와 여는 중괄호는 한 줄의 공백을 사용하여 각각의 줄에 함께 있어야합니다 (MUST).
 
 ~~~php
 <?php
@@ -289,11 +273,9 @@ class ClassName
 
 ### 4.5. `abstract`, `final`, and `static`
 
-When present, the `abstract` and `final` declarations MUST precede the
-visibility declaration.
+`abstract`와`final` 선언은 가시성 선언 앞에 와야합니다(MUST).
 
-When present, the `static` declaration MUST come after the visibility
-declaration.
+`static` 선언은 가시성 선언 뒤에 와야합니다(MUST).
 
 ~~~php
 <?php
@@ -312,13 +294,11 @@ abstract class ClassName
 }
 ~~~
 
-### 4.6. Method and Function Calls
+### 4.6. 메소드(Method) 호출과 함수(Function) 호출
 
-When making a method or function call, there MUST NOT be a space between the
-method or function name and the opening parenthesis, there MUST NOT be a space
-after the opening parenthesis, and there MUST NOT be a space before the
-closing parenthesis. In the argument list, there MUST NOT be a space before
-each comma, and there MUST be one space after each comma.
+메서드 나 함수 호출을 할 때 메서드 나 함수 이름과 여는 괄호 사이에 공백이 없어야합니다(MUST NOT). 
+여는 괄호 뒤에 공백이 있으면 안되며(MUST NO) 닫는 괄호 앞에 공백이 있어서는 안됩니다(MUST NOT).
+인수 목록에는 각 쉼표 앞에 공백이 있으면 안되며(MUST NOT) 각 쉼표 뒤에 하나의 공백이 있어야합니다(MUST).
 
 ~~~php
 <?php
@@ -327,9 +307,8 @@ $foo->bar($arg1);
 Foo::bar($arg2, $arg3);
 ~~~
 
-Argument lists MAY be split across multiple lines, where each subsequent line
-is indented once. When doing so, the first item in the list MUST be on the
-next line, and there MUST be only one argument per line.
+인수 목록은 여러 줄에 걸쳐 나뉘어 질 수 있으며(MAY), 각 줄은 한 번 들여 쓰여질 수 있습니다.
+그렇게 할 때 목록의 첫 번째 항목은 다음 줄에 있어야하며(MUST) 한 줄에 하나의 인수 만 있어야합니다(MUST).
 
 ~~~php
 <?php
@@ -340,27 +319,24 @@ $foo->bar(
 );
 ~~~
 
-## 5. Control Structures
+## 5. 제어문(Control Structures)
 
-The general style rules for control structures are as follows:
+제어문의 일반적인 스타일 규칙은 다음과 같습니다.
 
-- There MUST be one space after the control structure keyword
-- There MUST NOT be a space after the opening parenthesis
-- There MUST NOT be a space before the closing parenthesis
-- There MUST be one space between the closing parenthesis and the opening
-  brace
-- The structure body MUST be indented once
-- The closing brace MUST be on the next line after the body
+- 제어문 키워드 다음에 하나의 공백이 있어야합니다 (MUST).
+- 여는 괄호 뒤에 공백이 있으면 안됩니다 (MUST NOT).
+- 닫는 괄호 앞에 공백이 없어야합니다 (MUST NOT).
+- 닫는 괄호와 여는 중괄호 사이에 하나의 공백이 있어야합니다 (MUST).
+- 구조체는 한 번 들여 쓰기되어야합니다 (MUST).
+- 닫는 중괄호는 제어문의 다음 줄에 있어야합니다 (MUST).
 
-The body of each structure MUST be enclosed by braces. This standardizes how
-the structures look, and reduces the likelihood of introducing errors as new
-lines get added to the body.
+각 제어문는 중괄호로 묶어야합니다 (MUST).
+이것은 구조가 어떻게 보이는지를 표준화하고, 새로운 라인이 제어문에 추가 될 때 오류가 발생할 가능성을 줄입니다.
 
 ### 5.1. `if`, `elseif`, `else`
 
-An `if` structure looks like the following. Note the placement of parentheses,
-spaces, and braces; and that `else` and `elseif` are on the same line as the
-closing brace from the earlier body.
+`if` 구조는 다음과 같습니다. 괄호, 공백 및 중괄호의 배치에 유의하십시오. 
+`else`와 `elseif`는 이전 제어문의 닫는 중괄호와 같은 줄에 있습니다.
 
 ~~~php
 <?php
@@ -373,16 +349,13 @@ if ($expr1) {
 }
 ~~~
 
-The keyword `elseif` SHOULD be used instead of `else if` so that all control
-keywords look like single words.
+`else if` 키워드 대신 `elseif` 키워드를 사용하여 모든 제어 키워드가 단일 단어처럼 보이도록 해야 합니다 (SHOULD).
 
 ### 5.2. `switch`, `case`
 
-A `switch` structure looks like the following. Note the placement of
-parentheses, spaces, and braces. The `case` statement MUST be indented once
-from `switch`, and the `break` keyword (or other terminating keyword) MUST be
-indented at the same level as the `case` body. There MUST be a comment such as
-`// no break` when fall-through is intentional in a non-empty `case` body.
+`switch` 구조체는 다음과 같습니다.  괄호, 공백 및 중괄호의 배치에 유의하십시오. 
+`case` 문은 `switch`에서 한 번 들여 쓰기되어야하며(MUST) `break` 키워드 (또는 다른 종결 키워드)는 `case` 문과 같은 수준에서 들여 쓰기되어야합니다 (MUST).
+비어 있지 않은 `case` 문에서 의도적으로 다음으로 넘기는 경우 `// no break`와 같은 주석이 있어야합니다(MUST).
 
 ~~~php
 <?php
@@ -406,8 +379,7 @@ switch ($expr) {
 
 ### 5.3. `while`, `do while`
 
-A `while` statement looks like the following. Note the placement of
-parentheses, spaces, and braces.
+`while` 문은 다음과 같습니다. 괄호, 공백 및 중괄호의 배치에 유의하십시오.
 
 ~~~php
 <?php
@@ -416,8 +388,7 @@ while ($expr) {
 }
 ~~~
 
-Similarly, a `do while` statement looks like the following. Note the placement
-of parentheses, spaces, and braces.
+비슷한 경우로, do while 문은 다음과 같이 보입니다. 괄호, 공백 및 중괄호의 배치에 유의하십시오.
 
 ~~~php
 <?php
@@ -428,8 +399,7 @@ do {
 
 ### 5.4. `for`
 
-A `for` statement looks like the following. Note the placement of parentheses,
-spaces, and braces.
+`for` 문은 다음과 같이 보입니다. 괄호, 공백 및 중괄호의 배치에 유의하십시오.
 
 ~~~php
 <?php
@@ -440,8 +410,7 @@ for ($i = 0; $i < 10; $i++) {
 
 ### 5.5. `foreach`
 
-A `foreach` statement looks like the following. Note the placement of
-parentheses, spaces, and braces.
+`foreach` 문은 다음과 같이 보입니다. 괄호, 공백 및 중괄호의 배치에 유의하십시오.
 
 ~~~php
 <?php
@@ -452,8 +421,7 @@ foreach ($iterable as $key => $value) {
 
 ### 5.6. `try`, `catch`
 
-A `try catch` block looks like the following. Note the placement of
-parentheses, spaces, and braces.
+`try catch` 블록은 다음과 같이 보입니다. 괄호, 공백 및 중괄호의 배치에 유의하십시오.
 
 ~~~php
 <?php
@@ -466,26 +434,19 @@ try {
 }
 ~~~
 
-## 6. Closures
+## 6. 클로저(Closures)
 
-Closures MUST be declared with a space after the `function` keyword, and a
-space before and after the `use` keyword.
+클로저는 `function` 키워드 뒤의 공백과 `use` 키워드 앞뒤 공백으로 선언해야합니다 (MUST).
 
-The opening brace MUST go on the same line, and the closing brace MUST go on
-the next line following the body.
+여는 중괄호는 반드시 같은 줄에 있어야하며(MUST) 닫는 중괄호는 반드시 그 다음 줄에 있어야합니다(MUST).
 
-There MUST NOT be a space after the opening parenthesis of the argument list
-or variable list, and there MUST NOT be a space before the closing parenthesis
-of the argument list or variable list.
+인수 목록이나 변수 목록의 여는 괄호 다음에 공백이 있으면 안되며(MUST NOT) 인수 목록이나 변수 목록의 닫는 괄호 앞에 공백이 있으면 안됩니다(MUST NOT).
 
-In the argument list and variable list, there MUST NOT be a space before each
-comma, and there MUST be one space after each comma.
+인수 목록과 변수 목록에는 각 쉼표 앞에 공백이 있어서는 안되며(MUST NOT) 각 쉼표 뒤에 하나의 공백이 있어야합니다(MUST).
 
-Closure arguments with default values MUST go at the end of the argument
-list.
+기본값을 가진 클로저 인수는 인수 목록의 끝에 와야합니다 (MUST).
 
-A closure declaration looks like the following. Note the placement of
-parentheses, commas, spaces, and braces:
+클로저 선언은 다음과 같습니다. 괄호, 쉼표, 공백 및 중괄호의 배치에 유의하십시오.
 
 ~~~php
 <?php
@@ -498,17 +459,12 @@ $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
 };
 ~~~
 
-Argument lists and variable lists MAY be split across multiple lines, where
-each subsequent line is indented once. When doing so, the first item in the
-list MUST be on the next line, and there MUST be only one argument or variable
-per line.
+인수 목록과 변수 목록은 여러 행에 걸쳐 나뉘어 질 수 있습니다(MAY). 각 행은 한 번씩 들여 쓰기됩니다.
+그렇게 할 경우 첫 번째 항목은 다음 줄에 있어야만하며(MUST) 한 줄에 하나의 인수 또는 변수 만 있어야합니다(MUST).
 
-When the ending list (whether of arguments or variables) is split across
-multiple lines, the closing parenthesis and opening brace MUST be placed
-together on their own line with one space between them.
+마지막 리스트 (인수 또는 변수의 여부)가 여러 줄로 나뉘어 질 때, 닫는 괄호와 여는 중괄호는 하나의 공백을 사용하여 한줄에 있어야합니다 (MUST).
 
-The following are examples of closures with and without argument lists and
-variable lists split across multiple lines.
+다음은 인수 목록이 있거나없는 클로저의 예와 여러 줄에 걸쳐있는 변수 목록입니다.
 
 ~~~php
 <?php
@@ -557,8 +513,7 @@ $shortArgs_longVars = function ($arg) use (
 };
 ~~~
 
-Note that the formatting rules also apply when the closure is used directly
-in a function or method call as an argument.
+형식 지정 규칙은 함수 또는 메소드 호출에서 클로저가 직접 인수로 사용될 때도 적용됩니다.
 
 ~~~php
 <?php
@@ -571,34 +526,31 @@ $foo->bar(
 );
 ~~~
 
-## 7. Conclusion
+## 7. 결론
 
-There are many elements of style and practice intentionally omitted by this
-guide. These include but are not limited to:
+이 가이드에는 의도적으로 생략 한 스타일과 연습의 많은 요소가 있습니다. 여기에는 다음이 포함되지만 이에 국한되지는 않습니다 :
 
-- Declaration of global variables and global constants
+- 전역 변수 및 전역 상수 선언
 
-- Declaration of functions
+- 함수 선언
 
-- Operators and assignment
+- 운영자 및 과제
 
-- Inter-line alignment
+- 라인 간 정렬
 
-- Comments and documentation blocks
+- 주석 및 문서 블록
 
-- Class name prefixes and suffixes
+- 클래스 이름 접두사 및 접미사
 
-- Best practices
+- 모범 사례
 
-Future recommendations MAY revise and extend this guide to address those or
-other elements of style and practice.
+향후 권장 사항은 스타일이나 실습의 요소 또는 기타 요소를 다루기 위해이 가이드를 수정하고 확장 할 수 있습니다.
 
-## Appendix A. Survey
+## 부록 A. 설문조사
 
-In writing this style guide, the group took a survey of member projects to
-determine common practices.  The survey is retained herein for posterity.
+이 스타일 가이드를 작성하면서이 그룹은 공통 실천을 결정하기 위해 회원 프로젝트에 대한 설문 조사를 실시했습니다. 조사는 후일을 위해 여기에 유지됩니다.
 
-### A.1. Survey Data
+### A.1. 설문조사 자료
 
     url,http://www.horde.org/apps/horde/docs/CODING_STANDARDS,http://pear.php.net/manual/en/standards.php,http://solarphp.com/manual/appendix-standards.style,http://framework.zend.com/manual/en/coding-standard.html,https://symfony.com/doc/2.0/contributing/code/standards.html,http://www.ppi.io/docs/coding-standards.html,https://github.com/ezsystems/ezp-next/wiki/codingstandards,http://book.cakephp.org/2.0/en/contributing/cakephp-coding-conventions.html,https://github.com/UnionOfRAD/lithium/wiki/Spec%3A-Coding,http://drupal.org/coding-standards,http://code.google.com/p/sabredav/,http://area51.phpbb.com/docs/31x/coding-guidelines.html,https://docs.google.com/a/zikula.org/document/edit?authkey=CPCU0Us&hgd=1&id=1fcqb93Sn-hR9c0mkN6m_tyWnmEvoswKBtSc0tKkZmJA,http://www.chisimba.com,n/a,https://github.com/Respect/project-info/blob/master/coding-standards-sample.php,n/a,Object Calisthenics for PHP,http://doc.nette.org/en/coding-standard,http://flow3.typo3.org,https://github.com/propelorm/Propel2/wiki/Coding-Standards,http://developer.joomla.org/coding-standards.html
     voting,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,yes,no,no,no,?,yes,no,yes
@@ -624,72 +576,72 @@ determine common practices.  The survey is retained herein for posterity.
     blank_line_after_php,no,no,no,no,yes,no,no,no,no,yes,yes,no,no,yes,?,yes,yes,no,yes,no,yes,no
     class_method_control_brace,next/next/same,next/next/same,next/next/same,next/next/same,next/next/same,same/same/same,next/next/next,same/same/same,same/same/same,same/same/same,same/same/same,next/next/next,next/next/same,next/same/same,next/next/next,next/next/same,next/next/same,next/next/same,next/next/same,same/same/same,next/next/same,next/next/next
 
-### A.2. Survey Legend
+### A.2. 설문 조사 범례
 
 `indent_type`:
-The type of indenting. `tab` = "Use a tab", `2` or `4` = "number of spaces"
+들여 쓰기의 유형. `tab`= "탭 사용", `2`또는 `4`= "공백 개수"
 
 `line_length_limit_soft`:
-The "soft" line length limit, in characters. `?` = not discernible or no response, `no` means no limit.
+"소프트"줄 길이 제한 (문자 수). `?`= 식별 할 수 없거나 응답이 없으면 `아니오`는 제한이 없음을 의미합니다.
 
 `line_length_limit_hard`:
-The "hard" line length limit, in characters. `?` = not discernible or no response, `no` means no limit.
+"하드"줄 길이 제한 (문자 수). `?`= 식별 할 수 없거나 응답이 없으면 `아니오`는 제한이 없음을 의미합니다.
 
 `class_names`:
-How classes are named. `lower` = lowercase only, `lower_under` = lowercase with underscore separators, `studly` = StudlyCase.
+클래스 이름 지정 방법. `lower` = 소문자 만, `lower_under` = 밑줄 구분 기호가있는 소문자, `studly` = StudlyCase.
 
 `class_brace_line`:
-Does the opening brace for a class go on the `same` line as the class keyword, or on the `next` line after it?
+클래스의 여는 중괄호가 class 키워드와 `같은` 줄에 있거나, 그 `다음` 줄에 있습니까?
 
 `constant_names`:
-How are class constants named? `upper` = Uppercase with underscore separators.
+클래스 상수는 어떻게 명명됩니까? `upper` = 밑줄 구분자가있는 대문자.
 
 `true_false_null`:
-Are the `true`, `false`, and `null` keywords spelled as all `lower` case, or all `upper` case?
+`true`, `false` 및 `null` 키워드는 모두 `lower`또는 모두 `upper`로 철자가 맞습니까?
 
 `method_names`:
-How are methods named? `camel` = `camelCase`, `lower_under` = lowercase with underscore separators.
+메소드은 어떻게 명명됩니까? `camel` =`camelCase`,`lower_under` = 밑줄 구분 기호가있는 소문자.
 
 `method_brace_line`:
-Does the opening brace for a method go on the `same` line as the method name, or on the `next` line?
+메소드의 여는 중괄호가 메소드 이름과 `같은` 줄 또는 `다음` 줄에 있습니까?
 
 `control_brace_line`:
-Does the opening brace for a control structure go on the `same` line, or on the `next` line?
+제어문의 여는 중괄호가 `같은` 줄 또는 `다음` 줄에 있습니까?
 
 `control_space_after`:
-Is there a space after the control structure keyword?
+제어문 키워드 다음에 공백이 있습니까?
 
 `always_use_control_braces`:
-Do control structures always use braces?
+제어문은 항상 중괄호를 사용합니까?
 
 `else_elseif_line`:
-When using `else` or `elseif`, does it go on the `same` line as the previous closing brace, or does it go on the `next` line?
+`else` 나`elseif`를 사용할 때, 이전 닫는 중괄호와 `같은` 줄로 가야합니까, 아니면 `다음` 줄로 가나 요?
 
 `case_break_indent_from_switch`:
-How many times are `case` and `break` indented from an opening `switch` statement?
+`switch` 문에서 `case`와 `break`가 몇 번 들여 쓰여졌습니까?
 
 `function_space_after`:
-Do function calls have a space after the function name and before the opening parenthesis?
+함수 호출은 함수 이름 뒤에 여는 괄호 앞에 공백이 있습니까?
 
 `closing_php_tag_required`:
-In files containing only PHP, is the closing `?>` tag required?
+PHP 만 포함 된 파일에서 닫는 `?>`태그가 필요합니까?
 
 `line_endings`:
-What type of line ending is used?
+어떤 유형의 종료 라인이 사용됩니까?
 
 `static_or_visibility_first`:
-When declaring a method, does `static` come first, or does the visibility come first?
+메서드를 선언 할 때 `static`이 먼저 오는가, 아니면 가시성이 먼저 오는가?
 
 `control_space_parens`:
-In a control structure expression, is there a space after the opening parenthesis and a space before the closing parenthesis? `yes` = `if ( $expr )`, `no` = `if ($expr)`.
+제어 구조 표현식에서 여는 괄호 뒤에 공백이 있고 닫는 괄호 앞에 공백이 있습니까? `yes` =`if ( $expr )`,`no` =`if ($expr)`입니다.
 
 `blank_line_after_php`:
-Is there a blank line after the opening PHP tag?
+여는 PHP 태그 뒤에 빈 줄이 있습니까?
 
 `class_method_control_brace`:
-A summary of what line the opening braces go on for classes, methods, and control structures.
+클래스, 메서드 및 컨트롤 구조에 대해 여는 중괄호가 어떤 줄로 표시되는지 요약합니다.
 
-### A.3. Survey Results
+### A.3. 설문조사 결과
 
     indent_type:
         tab: 7
