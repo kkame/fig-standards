@@ -39,10 +39,8 @@ _참고 : "요청 처리기"와 "미들웨어"에 대한 모든 참조는 **서�
 
 ### 1.2 Middleware
 
-A middleware component is an individual component participating, often together with other middleware components, in the processing of an incoming request and the creation of a resulting response, as defined by PSR-7.
 미들웨어 구성 요소는 들어오는 요청을 처리하고 PSR-7에 정의 된 결과 응답을 생성 할 때 다른 미들웨어 구성 요소와 함께 참여하는 개별 구성 요소입니다.
 
-A middleware component MAY create and return a response without delegating to a request handler, if sufficient conditions are met.
 미들웨어 컴포넌트는 충분한 조건이 만족된다면 요청 처리자에게 위임하지 않고 응답을 생성하고 리턴 할 수 있습니다 (MAY).
 
 이 표준을 사용하는 미들웨어는 다음 인터페이스를 구현해야합니다(MUST).
@@ -71,7 +69,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Handles a server request and produces a response
+ * Handles a server request and produces a response.
  *
  * An HTTP request handler process an HTTP request in order to produce an
  * HTTP response.
@@ -79,7 +77,7 @@ use Psr\Http\Message\ServerRequestInterface;
 interface RequestHandlerInterface
 {
     /**
-     * Handles a request and produces a response
+     * Handles a request and produces a response.
      *
      * May call other collaborating code to generate the response.
      */
@@ -98,7 +96,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Participant in processing a server request and response
+ * Participant in processing a server request and response.
  *
  * An HTTP middleware component participates in processing an HTTP message:
  * by acting on the request, generating the response, or forwarding the
@@ -107,7 +105,7 @@ use Psr\Http\Message\ServerRequestInterface;
 interface MiddlewareInterface
 {
     /**
-     * Process an incoming server request
+     * Process an incoming server request.
      *
      * Processes an incoming server request in order to produce a response.
      * If unable to produce the response itself, it may delegate to the provided

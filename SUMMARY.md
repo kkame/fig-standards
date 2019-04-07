@@ -12,10 +12,14 @@
 * [PSR-7-http-message](accepted/PSR-7-http-message.md)
 * [PSR-11-container](accepted/PSR-11-container.md)
 * [PSR-13-links](accepted/PSR-13-links.md)
+* [PSR-14-event-dispatcher](accepted/PSR-14-event-dispatcher.md)
 * [PSR-15-request-handlers](accepted/PSR-15-request-handlers.md)
 * [PSR-16-simple-cache](accepted/PSR-16-simple-cache.md)
 * [PSR-17-http-factory](accepted/PSR-17-http-factory.md)
+* [PSR-18-http-client](accepted/PSR-18-http-client.md)
 
+## 제안된 사항 (Proposed)
+* [PSR-12-extended-coding-style-guide](proposed/PSR-12-extended-coding-style-guide.md)
 
 ## 참고자료
 

@@ -338,15 +338,31 @@ array(
 `$_FILES`은 다음과 같이 보입니다
 
 ~~~php
-array(
-    'my-form' => array(
-        'details' => array(
-            'avatar' => array(
-                'tmp_name' => 'phpUxcOty',
-                'name' => 'my-avatar.png',
-                'size' => 90996,
-                'type' => 'image/png',
-                'error' => 0,
+array (
+    'my-form' => array (
+        'name' => array (
+            'details' => array (
+                'avatar' => 'my-avatar.png',
+            ),
+        ),
+        'type' => array (
+            'details' => array (
+                'avatar' => 'image/png',
+            ),
+        ),
+        'tmp_name' => array (
+            'details' => array (
+                'avatar' => 'phpmFLrzD',
+            ),
+        ),
+        'error' => array (
+            'details' => array (
+                'avatar' => 0,
+            ),
+        ),
+        'size' => array (
+            'details' => array (
+                'avatar' => 90996,
             ),
         ),
     ),
@@ -378,34 +394,50 @@ Upload an avatar: <input type="file" name="my-form[details][avatars][]" />
 왜냐하면 `$_FILES` 는 다음과 같은 경우 정상적인 구조에서 벗어났기 때문입니다
 
 ~~~php
-array(
-    'my-form' => array(
-        'details' => array(
-            'avatars' => array(
-                'tmp_name' => array(
-                    0 => '...',
-                    1 => '...',
-                    2 => '...',
+array (
+    'my-form' => array (
+        'name' => array (
+            'details' => array (
+                'avatar' => array (
+                    0 => 'my-avatar.png',
+                    1 => 'my-avatar2.png',
+                    2 => 'my-avatar3.png',
                 ),
-                'name' => array(
-                    0 => '...',
-                    1 => '...',
-                    2 => '...',
+            ),
+        ),
+        'type' => array (
+            'details' => array (
+                'avatar' => array (
+                    0 => 'image/png',
+                    1 => 'image/png',
+                    2 => 'image/png',
                 ),
-                'size' => array(
-                    0 => '...',
-                    1 => '...',
-                    2 => '...',
+            ),
+        ),
+        'tmp_name' => array (
+            'details' => array (
+                'avatar' => array (
+                    0 => 'phpmFLrzD',
+                    1 => 'phpV2pBil',
+                    2 => 'php8RUG8v',
                 ),
-                'type' => array(
-                    0 => '...',
-                    1 => '...',
-                    2 => '...',
+            ),
+        ),
+        'error' => array (
+            'details' => array (
+                'avatar' => array (
+                    0 => 0,
+                    1 => 0,
+                    2 => 0,
                 ),
-                'error' => array(
-                    0 => '...',
-                    1 => '...',
-                    2 => '...',
+            ),
+        ),
+        'size' => array (
+            'details' => array (
+                'avatar' => array (
+                    0 => 90996,
+                    1 => 90996,
+                    3 => 90996,
                 ),
             ),
         ),

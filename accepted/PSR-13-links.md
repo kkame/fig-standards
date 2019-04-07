@@ -90,7 +90,7 @@ URI 템플릿을 지원하지 않는 형식의 Serializer는 템플릿 기반 �
 이러한 이유 때문에, 단일 변경으로 새 객체 인스턴스를 생성하는 메소드인 `EvolvableLinkInterface`가 추가적으로 제공됩니다.
 같은 방식이 PSR-7에서 사용되었고, PHP의 copy-on-write 동작 덕분에 여전히 CPU와 메모리가 효율적입니다.
 
-그러나 링크의 templated 된 값은 href 값에 기반하므로 templated에 대한 확장 가능한 방법은 없습니다. `역자주: evolvable지만 좀 더 좋은 단어를 찾지 못하였습니다`
+그러나 링크의 templated 된 값은 href 값에 기반하므로 templated 된 값에 대한 확장 가능한 방법은 없습니다. `역자주: evolvable지만 좀 더 좋은 단어를 찾지 못하였습니다`
 이것은 독립적으로 설정하면 안되지만(MUST NOT), href 값이 RFC 6570 링크 템플릿인지에 따라서 결정됩니다.
 
 ## 2. Package
@@ -172,7 +172,7 @@ interface EvolvableLinkInterface extends LinkInterface
      * Returns an instance with the specified href.
      *
      * @param string $href
-     *   The href value to include.  It must be one of:
+     *   The href value to include. It must be one of:
      *     - An absolute URI, as defined by RFC 5988.
      *     - A relative URI, as defined by RFC 5988. The base of the relative link
      *       is assumed to be known based on context by the client.

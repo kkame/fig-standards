@@ -7,7 +7,6 @@ Common Interface for Caching Libraries
 이것은 [RFC 2119]에 설명 된대로 해석해야 합니다.
 `역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
 
-The final implementations MAY decorate the objects with more functionality than the one proposed but they MUST implement the indicated interfaces/functionality first.
 최종 구현체는 제시된 것보다 더 많은 기능을 가진 객체로 만들 수 있지만(MAY) 반드시 지정한 인터페이스/기능을 먼저 구현해야합니다(MUST).
 
 [RFC 2119]: http://tools.ietf.org/html/rfc2119
@@ -47,7 +46,7 @@ PSR-6은 이미 이 문제를 해결했지만 단순한 유스 케이스에 필�
 
 *    **Key** - 캐시 된 항목을 고유하게 식별하는 적어도 하나의 문자로 구성된 문자열입니다.
 구현 라이브러리는`A-Z`,`a-z`,`0-9`,`_` 및`.` 문자로 구성된 키를 UTF-8 인코딩과 길이가 64 문자 이하의 순서로 지원해야합니다 (MUST).
-구현 라이브러리은 추가 문자와 인코딩 또는 더 긴 길이를 지원할 수 있지만 최소한 그 최소값을 지원해야합니다(MAY).
+구현 라이브러리은 추가 문자와 인코딩 또는 더 긴 길이를 지원할 수 있지만(MAY) 최소한 그 최소값을 지원해야합니다(MUST).
 라이브러리는 적절하게 키 문자열을 이스케이프 처리해야하지만 원래의 수정되지 않은 키 문자열을 반환 할 수 있어야합니다(MUST).
 다음 문자는 미래의 확장을 위해 예약되어 있으며, 구현 라이브러리에서 지원해서는 안됩니다(MUST NOT) :`{} () / \ @ :`
 
@@ -69,17 +68,11 @@ PSR-6은 이미 이 문제를 해결했지만 단순한 유스 케이스에 필�
 *    **Strings** - PHP 호환 인코딩의 임의의 크기를 갖는 문자열.
 *    **Integers** - PHP가 지원하는 모든 크기의 정수 (최대 64 비트).
 *    **Floats** - 부호가 있는(signed) 모든 부동소수점 값.
-*    **Boolean** - True 와 False.
+*    **Booleans** - True 와 False.
 *    **Null** - null값 (캐시미스와 구별이 되지 않습니다).
 *    **Arrays** - 인덱스된 임의의 깊이를 가진 연관 및 다차원 배열
-*    **Object** - `$o == unserialize(serialize($o))` 와 같이 무손실 직렬화 및 직렬화 해제를 지원하는 객체.
+*    **Objects** - `$o == unserialize(serialize($o))` 와 같이 무손실 직렬화 및 직렬화 해제를 지원하는 객체.
 객체는 PHP의 Serializable 인터페이스, 적절한 경우 `__sleep()` 또는 `__wakeup()` 매직 메서드 또는 유사한 언어 기능을 활용할 수 있습니다(MAY).
-
-All data passed into the Implementing Library MUST be returned exactly as passed.
-That includes the variable type.
-That is, it is an error to return (string) 5 if (int) 5 was the value saved.
-Implementing Libraries MAY use PHP's serialize()/unserialize() functions internally but are not required to do so.
-Compatibility with them is simply used as a baseline for acceptable object values.
 
 구현 라이브러리에 전달 된 모든 데이터는 전달 된 그대로 정확하게 반환되어야합니다(MUST).
 여기에는 가변 유형이 포함됩니다.
@@ -125,7 +118,7 @@ interface CacheInterface
      * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
      * @param string                 $key   The key of the item to store.
-     * @param mixed                  $value The value of the item to store, must be serializable.
+     * @param mixed                  $value The value of the item to store. Must be serializable.
      * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
      *                                      the driver supports TTL then the library may set a default value
      *                                      for it or let the driver take care of that.
@@ -205,7 +198,7 @@ interface CacheInterface
      * NOTE: It is recommended that has() is only to be used for cache warming type purposes
      * and not to be used within your live applications operations for get/set, as this method
      * is subject to a race condition where your has() will return true and immediately after,
-     * another script can remove it making the state of your app out of date.
+     * another script can remove it, making the state of your app out of date.
      *
      * @param string $key The cache item key.
      *
@@ -244,8 +237,8 @@ namespace Psr\SimpleCache;
 /**
  * Exception interface for invalid cache arguments.
  *
- * When an invalid argument is passed it must throw an exception which implements
- * this interface
+ * When an invalid argument is passed it, must throw an exception which implements
+ * this interface.
  */
 interface InvalidArgumentException extends CacheException
 {
