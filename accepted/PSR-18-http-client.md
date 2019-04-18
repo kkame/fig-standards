@@ -1,70 +1,57 @@
 HTTP Client
 ===========
 
-This document describes a common interface for sending HTTP requests and receiving HTTP responses.
+이 문서에서는 HTTP 요청을 보내고 HTTP 응답을받는 일반적인 인터페이스에 대해 설명합니다.
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
-"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
-interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
+이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
+이것은 [RFC 2119](http://tools.ietf.org/html/rfc2119)에 설명 된대로 해석해야 합니다.
+`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
 
-## Goal
+## 목표
 
-The goal of this PSR is to allow developers to create libraries decoupled from HTTP client
-implementations. This will make libraries more reusable as it reduces the number of
-dependencies and lowers the likelihood of version conflicts.
+이 PSR의 목표는 개발자가 HTTP 클라이언트 구현에서 분리 된 라이브러리를 만들 수있게하는 것입니다.
+이렇게하면 종속성 수가 줄어들고 버전 충돌의 가능성이 줄어들기 때문에 라이브러리를 더 많이 재사용 할 수 있습니다.
 
-A second goal is that HTTP clients can be replaced as per the
-[Liskov substitution principle][Liskov]. This means that all clients MUST behave in the
-same way when sending a request.
+두 번째 목표는 HTTP 클라이언트가 [Liskov 치환 원칙][Liskov]에 따라 대체 될 수 있다는 것입니다.
+즉, 요청을 보낼 때 모든 클라이언트가 동일한 방식으로 작동해야합니다.
 
-## Definitions
+## 정의
 
-* **Client** - A Client is a library that implements this specification for the purposes of
-sending PSR-7-compatible HTTP Request messages and returning a PSR-7-compatible HTTP Response message to a Calling library.
-* **Calling Library** - A Calling Library is any code that makes use of a Client.  It does not implement
-this specification's interfaces but consumes an object that implements them (a Client).
+* **클라이언트** - 클라이언트는 PSR-7 호환 HTTP 요청 메시지를 보내고 PSR-7 호환 HTTP 응답 메시지를 호출 라이브러리에 반환하기 위해 이 사양을 구현하는 라이브러리입니다.
+* **호출 라이브러리** - 호출 라이브러리는 클라이언트를 사용하는 모든 코드입니다. 이 문서에 존재하는 인터페이스를 구현하지 않지만 이를 구현하는 객체 (클라이언트)를 사용합니다.
 
-## Client
+## 클라이언트
 
-A Client is an object implementing `ClientInterface`.
+클라이언트는 `ClientInterface`를 구현 한 객체입니다.
 
-A Client MAY:
+클라이언트는 다음과 같은 것을 할 수 있습니다.(MAY) :
 
-* Choose to send an altered HTTP request from the one it was provided. For example, it could
-compress an outgoing message body.
-* Choose to alter a received HTTP response before returning it to the calling library. For example, it could
-decompress an incoming message body.
+* 제공된 HTTP 요청을 변경하여 보낼지 선택합니다. 예를 들어, 보내는 메시지 본문을 압축 할 수 있습니다.
+* 수신 된 HTTP 응답을 호출 라이브러리로 되돌리기 전에 변경할 것인지 선택합니다. 예를 들어 들어오는 메시지 본문의 압축을 풀 수 있습니다.
 
-If a Client chooses to alter either the HTTP request or HTTP response, it MUST ensure that the
-object remains internally consistent.  For example, if a Client chooses to decompress the message
-body then it MUST also remove the `Content-Encoding` header and adjust the `Content-Length` header.
+클라이언트가 HTTP 요청이나 HTTP 응답을 변경하기로 결정한 경우, 객체가 내부적으로 일관성을 유지하는지 확인해야합니다 (MUST).
+ 예를 들어, 클라이언트가 메시지 본문을 압축 해제하기로 선택한 경우, 반드시 `Content-Encoding` 헤더를 제거하고`Content-Length` 헤더를 조정해야합니다.
 
-Note that as a result, since [PSR-7 objects are immutable](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message-meta.md#why-value-objects),
-the Calling Library MUST NOT assume that the object passed to `ClientInterface::sendRequest()` will be the same PHP object
-that is actually sent. For example, the Request object that is returned by an exception MAY be a different object than
-the one passed to `sendRequest()`, so comparison by reference (===) is not possible.
+결과적으로 [PSR-7 객체는 불변이므로](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message-meta.md#why-value-objects), 호출 라이브러리는 `ClientInterface::sendRequest()`에 전달 된 객체가 실제로 전송 된 것과 동일한 PHP 객체가 될 것이라고 가정해서는 안됩니다.
+예를 들어, 예외에 의해 반환 된 Request 객체는 `sendRequest()`에 전달 된 것과 다른 객체 일 수 있기 때문에 참조 (===)로 비교할 수 없습니다.
 
-A Client MUST:
+클라이언트는 반드시 다음을 지켜야합니다.(MUST) :
 
-* Reassemble a multi-step HTTP 1xx response itself so that what is returned to the Calling Library is a valid HTTP response
-of status code 200 or higher.
+* 호출 라이브러리에 반환되는 내용이 상태 코드 200 이상의 유효한 HTTP 응답이 되도록 여러개의 HTTP 1xx 응답 자체를 재구성하십시오
 
-## Error handling
+## 오류 처리
 
-A Client MUST NOT treat a well-formed HTTP request or HTTP response as an error condition. For example, response
-status codes in the 400 and 500 range MUST NOT cause an exception and MUST be returned to the Calling Library as normal.
+클라이언트는 올바른 형식의 HTTP 요청이나 HTTP 응답을 오류 조건으로 취급해서는 안됩니다 (MUST NOT).
 
-A Client MUST throw an instance of `Psr\Http\Client\ClientExceptionInterface` if and only if it is unable to send
-the HTTP request at all or if the HTTP response could not be parsed into a PSR-7 response object.
+예를 들어 400 및 500 범위의 응답 상태 코드는 예외를 발생시키지 않아야하며 정상적으로 호출 라이브러리에 반환되어야합니다 (MUST).
 
-If a request cannot be sent because the request message is not a well-formed HTTP request or is missing some critical
-piece of information (such as a Host or Method), the Client MUST throw an instance of `Psr\Http\Client\RequestExceptionInterface`.
+클라이언트가 HTTP 요청을 전혀 보낼 수 없거나 HTTP 응답을 PSR-7 응답 객체로 구문 분석을 할 수없는 경우에만 클라이언트는 `Psr\Http\Client\ClientExceptionInterface` 인스턴스를 던져야합니다.
 
-If the request cannot be sent due to a network failure of any kind, including a timeout, the Client MUST throw an
-instance of `Psr\Http\Client\NetworkExceptionInterface`.
+요청 메시지가 올바른 형식의 HTTP 요청이 아니거나 일부 중요한 정보 (예 : 호스트 또는 메서드)가 없어서 요청을 보낼 수없는 경우, 클라이언트는 `Psr\Http\Client\RequestExceptionInterface`의 인스턴스를 던져야만 합니다.(MUST)
 
-Clients MAY throw more specific exceptions than those defined here (a `TimeOutException` or `HostNotFoundException` for
-example), provided they implement the appropriate interface defined above.
+타임 아웃을 포함하여 어떤 종류의 네트워크 장애로 인해 요청을 보낼 수없는 경우, 클라이언트는 `Psr\Http\Client\NetworkExceptionInterface`의 인스턴스를 던져야만 합니다 (MUST).
+
+클라이언트는 위에서 정의된 인터페이스를 적합하게 구현한다면 여기에 정의 된 것보다 더 구체적인 예외 (예 :`TimeOutException` 또는 `HostNotFoundException`)를 던질 수도 있습니다 (MAY).
 
 ## Interfaces
 
