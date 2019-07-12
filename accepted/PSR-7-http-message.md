@@ -87,10 +87,6 @@ echo $message->getHeaderLine('foo');
 
 #### 여러개의 값을 가진 헤더
 
-In order to accommodate headers with multiple values yet still provide the convenience of working with headers as strings, headers can be retrieved from an instance of a `MessageInterface` as an array or a string. 
-Use the `getHeaderLine()` method to retrieve a header value as a string containing all header values of a case-insensitive header by name concatenated with a comma.
-Use `getHeader()` to retrieve an array of all the header values for a particular case-insensitive header by name.
-
 여러개의 값을 가진 헤더를 수용하면서도 헤더로 문자열 작업을 할 수있는 편리함을 제공하기 위해, 배열이나 문자열로 `MessageInterface` 의 인스턴스에서 헤더를 검색 할 수 있습니다.
 `getHeaderLine()` 메서드를 사용하여, 대소문자를 구분하지 않는 헤더의 이름으로 검색한 결과 값을 모두 쉼표로 연결한 문자열을 가져옵니다.
 대문자와 소문자를 구분하지 않는 헤더의 모든 헤더 값의 배열을 이름으로 검색하려면 `getHeader()`를 사용하십시오.
