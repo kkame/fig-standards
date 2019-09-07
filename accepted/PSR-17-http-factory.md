@@ -5,7 +5,7 @@ HTTP Factories
 
 PSR-7은 HTTP 객체를 만드는 방법에 대한 권장 사항을 포함하지 않았기 때문에 PSR-7의 특정 구현과 관련되지 않은 구성 요소 내에 새로운 HTTP 객체를 생성해야 할 때 어려움을 겪습니다.
 
-이 문서에 설명 된 인터페이스는 PSR-7 객체를 인스턴스화 할 수있는 방법을 설명합니다.
+이 문서에 설명 된 인터페이스는 PSR-7 객체를 인스턴스화 할 수 있는 방법을 설명합니다.
 
 이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
 이것은 [RFC 2119][rfc2119]에 설명 된대로 해석해야 합니다.
@@ -152,7 +152,7 @@ $resource = fopen('php://temp', 'r+');
 
 ### 2.5 UploadedFileFactoryInterface
 
-업로드 된 파일의 스트림을 만들 수있는 기능
+업로드 된 파일의 스트림을 만들 수 있는 기능
 
 ```php
 namespace Psr\Http\Message;

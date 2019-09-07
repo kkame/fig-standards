@@ -115,7 +115,7 @@ Item은 풀 내의 단일 키 / 값 쌍을 나타냅니다.
 ### CacheItemInterface
 
 `CacheItemInterface`는 캐시 시스템 내부의 항목을 정의합니다.
-각 Item 객체는 구현 시스템에 따라 설정 될 수있는 특정 키와 연결되어야하며(MUST) 일반적으로 `Cache\CacheItemPoolInterface` 객체에 의해 전달됩니다.
+각 Item 객체는 구현 시스템에 따라 설정 될 수 있는 특정 키와 연결되어야하며(MUST) 일반적으로 `Cache\CacheItemPoolInterface` 객체에 의해 전달됩니다.
 
 `Cache\CacheItemInterface` 객체는 캐시 항목의 저장 및 검색을 캡슐화합니다.
 각 `Cache\CacheItemInterface`는 `Cache\CacheItemPoolInterface` 오브젝트에 의해 생성되며, 필요한 모든 설정을 담당 할 뿐만 아니라 오브젝트를 고유 키와 연관시킵니다.

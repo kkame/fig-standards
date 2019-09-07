@@ -49,7 +49,7 @@ _참고 : "요청 처리기"와 "미들웨어"에 대한 모든 참조는 **서�
 
 ### 1.3 Generating Responses
 
-응답을 생성하는 미들웨어 또는 요청 처리기는 특정 HTTP 메시지 구현에 대한 의존을 방지하기 위해 PSR-7 `ResponseInterface` 의 프로토타입 또는 `ResponseInterface` 인스턴스를 생성 할 수있는 팩토리를 작성하는 것이 좋습니다(RECOMMENDED).
+응답을 생성하는 미들웨어 또는 요청 처리기는 특정 HTTP 메시지 구현에 대한 의존을 방지하기 위해 PSR-7 `ResponseInterface` 의 프로토타입 또는 `ResponseInterface` 인스턴스를 생성 할 수 있는 팩토리를 작성하는 것이 좋습니다(RECOMMENDED).
 
 ### 1.4 Handling Exceptions
 
