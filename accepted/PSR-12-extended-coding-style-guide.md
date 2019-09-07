@@ -835,11 +835,6 @@ if ($a === $b) {
 }
 ~~~
 
-### 6.3. Ternary operators
-
-The conditional operator, also known simply as the ternary operator, MUST be preceded and followed by at least one space around both the `?` and `:` characters:
-
-
 ### 6.3. 삼항-Ternary 연산자
 
 삼항 연산자라고도하는 조건부 연산자 `?` 및 `:`문자 앞뒤에는 하나 이상의 공백이 와야합니다(MUST).
