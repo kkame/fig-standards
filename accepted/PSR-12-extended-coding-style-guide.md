@@ -359,6 +359,8 @@ class Talker
 
 모든 속성-property에서 가시성을 반드시(MUST) 선언해야합니다.
 
+`역자주: 가시성은 다른 언어에서 접근제어자 등으로 부르는 public, protected, private 를 의미합니다`
+
 프로젝트의 PHP 최소 버전이 상수의 가시성 (PHP 7.1.0 이상)을 지원하는 경우 모든 상수에 대한 가시성을 반드시(MUST) 선언해야합니다.
 
 `var` 키워드는 속성-property를 선언하는데 사용해서는 안됩니다 (MUST NOT).
