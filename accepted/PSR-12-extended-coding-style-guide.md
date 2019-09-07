@@ -821,13 +821,9 @@ $e = -$f;
 $intValue = (int) $input;
 ~~~
 
-### 6.2. Binary operators
-
-All binary [arithmetic][], [comparison][], [assignment][], [bitwise][], [logical][], [string][], and [type][] operators MUST be preceded and followed by at least one space:
-
 ### 6.2. 이진 연산자
 
-모든 이진 [산술-arithmetic][], [비교-comparison][], [할당-assignment][], [비트-bitwise][], [논리-logical][], [문자열-string][] 및 [type][] 연산자의 앞뒤에는 최소한 하나 이상의 공백이 있어야 합니다(MUST).
+모든 이진 [arithmetic][], [comparison][], [assignment][], [bitwise][], [logical][], [문자열-string][] 및 [type][] 연산자의 앞뒤에는 최소한 하나 이상의 공백이 있어야 합니다(MUST).
 
 ~~~php
 if ($a === $b) {
