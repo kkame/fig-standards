@@ -460,9 +460,6 @@ class ClassName
 }
 ~~~
 
-When you have a return type declaration present, there MUST be one space after the colon followed by the type declaration. 
-The colon and declaration MUST be on the same line as the argument list closing parenthesis with no spaces between the two characters.
-
 반환형식(return type) 선언이 있으면 콜론 뒤에 공백이 하나 있어야하며(MUST) 그 다음에 형식 선언이옵니다. 
 콜론과 반환형식 선언은 두 문자 사이에 공백이 없는 인수 목록을 닫는 괄호와 같은 줄에 있어야합니다(MUST).
 
