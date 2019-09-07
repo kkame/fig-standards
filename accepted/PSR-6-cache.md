@@ -79,7 +79,7 @@
 
 구현 라이브러리에 전달 된 모든 데이터는 전달 된 그대로 정확하게 반환되어야합니다(MUST).
 여기에는 가변 유형이 포함됩니다. 즉, 만약 (int) 5가 저장된 값이었던 경우 (string) 5를 반환하는 것은 오류입니다.
-구현 라이브러리는 PHP의 `serialize()` / `unserialize()` 함수를 내부적으로 사용할 수 있지만 꼭 그렇게 할 필요는 없습니다(MAY).
+구현 라이브러리는 PHP의 `serialize()`/`unserialize()` 함수를 내부적으로 사용할 수 있지만 꼭 그렇게 할 필요는 없습니다(MAY).
 이들과의 호환성은 수용 가능한 객체 값의 기준선으로 사용됩니다.
 
 
@@ -318,7 +318,7 @@ interface CacheItemPoolInterface
      *
      * @param string[] $keys
      *   An array of keys that should be removed from the pool.
-
+     *
      * @throws InvalidArgumentException
      *   If any of the keys in $keys are not a legal value a \Psr\Cache\InvalidArgumentException
      *   MUST be thrown.
