@@ -2,7 +2,7 @@
 
 > **사용중단** - 2019-08-10을 기준으로 PSR-2은 사용이 중단되었습니다. 새로운 표준으로 [PSR-12]을 사용하시길 권장합니다.
 
-[PSR-12]: accepted/PSR-12-extended-coding-style-guide.md
+[PSR-12]: /accepted/PSR-12-extended-coding-style-guide.md
 
 이 가이드는 기본 코딩 표준인 [PSR-1]을 확장입니다.
 
