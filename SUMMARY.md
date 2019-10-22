@@ -1,9 +1,5 @@
 # Summary
 
-## 종료된 사항 (Deprecated)
-* [PSR-0](deprecated/PSR-0.md)
-* [PSR-2-coding-style-guide](deprecated/PSR-2-coding-style-guide.md)
-
 ## 승인 완료된 사항 (Accepted)
 
 * [PSR-1-basic-coding-standard](accepted/PSR-1-basic-coding-standard.md)
@@ -20,6 +16,11 @@
 * [PSR-16-simple-cache](accepted/PSR-16-simple-cache.md)
 * [PSR-17-http-factory](accepted/PSR-17-http-factory.md)
 * [PSR-18-http-client](accepted/PSR-18-http-client.md)
+
+## 종료된 사항 (Deprecated)
+
+* [PSR-0](deprecated/PSR-0.md)
+* [PSR-2-coding-style-guide](deprecated/PSR-2-coding-style-guide.md)
 
 ## 참고자료
 
