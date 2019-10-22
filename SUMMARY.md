@@ -1,10 +1,12 @@
 # Summary
 
+## 종료된 사항 (Deprecated)
+* [PSR-0](deprecated/PSR-0.md)
+* [PSR-2-coding-style-guide](deprecated/PSR-2-coding-style-guide.md)
+
 ## 승인 완료된 사항 (Accepted)
 
-* [PSR-0](accepted/PSR-0.md)
 * [PSR-1-basic-coding-standard](accepted/PSR-1-basic-coding-standard.md)
-* [PSR-2-coding-style-guide](accepted/PSR-2-coding-style-guide.md)
 * [PSR-3-logger-interface](accepted/PSR-3-logger-interface.md)
 * [PSR-4-autoloader](accepted/PSR-4-autoloader.md)
 * [PSR-4-autoloader-examples](accepted/PSR-4-autoloader-examples.md)
