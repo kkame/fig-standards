@@ -16,6 +16,7 @@
 * [PSR-16-simple-cache](accepted/PSR-16-simple-cache.md)
 * [PSR-17-http-factory](accepted/PSR-17-http-factory.md)
 * [PSR-18-http-client](accepted/PSR-18-http-client.md)
+* [PSR-20-clock](accepted/PSR-20-clock.md)
 
 ## 종료된 사항 (Deprecated)
 
