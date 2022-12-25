@@ -9,7 +9,8 @@ PSR-7은 HTTP 객체를 만드는 방법에 대한 권장 사항을 포함하지
 
 이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
 이것은 [RFC 2119][rfc2119]에 설명 된대로 해석해야 합니다.
-`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
+
+> 역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다
 
 [psr7]: https://www.php-fig.org/psr/psr-7/
 [rfc2119]: https://tools.ietf.org/html/rfc2119

@@ -14,7 +14,8 @@ _참고 : "요청 처리기"와 "미들웨어"에 대한 모든 참조는 **서�
 
 이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
 이것은 [rfc2119]에 설명 된대로 해석해야 합니다.
-`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
+
+> 역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다
 
 [psr7]: http://www.php-fig.org/psr/psr-7/
 [rfc2119]: http://tools.ietf.org/html/rfc2119

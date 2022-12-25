@@ -6,7 +6,8 @@
 
 이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
 이것은 [RFC 2119]에 설명 된대로 해석해야 합니다.
-`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
+
+> 역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다
 
 이 문서에서 `implementor` 라는 단어는 의존성 삽입 관련 라이브러리나 프레임워크에서 `ContainerInterface`를 구현하는 누군가로 해석되어야합니다.
 의존성 주입 컨테이너 (DIC)의 사용자는 `사용자`라고합니다.

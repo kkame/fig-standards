@@ -15,7 +15,8 @@ PHP 코드의 형식을 지정하는 방법에 대한 여러가지 규칙과 기
 
 이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
 이것은 [RFC 2119]에 설명 된대로 해석해야 합니다.
-`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
+
+> 역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다
 
 [RFC 2119]: http://www.ietf.org/rfc/rfc2119.txt
 [PSR-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
@@ -37,7 +38,8 @@ PHP 코드의 형식을 지정하는 방법에 대한 여러가지 규칙과 기
 
 - 모든 속성 및 메서드에서 가시성을 선언해야만 합니다 (MUST). `abstract`와`final`은 가시성 (visibility) 전에 선언되어야만 합니다(MUST). `static`은 가시성 뒤에 선언되어야만 합니다 (MUST).
 
-- 제어문 키워드는 그 뒤에 하나의 공백을 가져야만 합니다 (MUST). 메서드와 함수에서 해서는 안됩니다(MUST NOT). `역자주: if, switch, try, catch, foreach 등`
+- 제어문 키워드는 그 뒤에 하나의 공백을 가져야만 합니다 (MUST). 메서드와 함수에서 해서는 안됩니다(MUST NOT). 
+  > 역자주: if, switch, try, catch, foreach 등
 
 - 제어문를 여는 중괄호는 같은 줄에 있어야만 하며(MUST), 닫는 중괄호는 반드시 본문 뒤의 다음 줄로 가야만 합니다(MUST).
 

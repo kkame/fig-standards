@@ -7,7 +7,8 @@ Event Dispatching은 개발자가 어플리케이션에 로직을 쉽고 일관�
 
 이 문서에서 핵심이 되는 단어는 "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL" 입니다. 
 이것은 [RFC 2119]에 설명 된대로 해석해야 합니다.
-`역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다`
+
+> 역자주: 위의 키워드는 아래의 번역문에 괄호안에 표시하였습니다
 
 [RFC 2119]: http://tools.ietf.org/html/rfc2119
 
